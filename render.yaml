@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: sila-vcf
+    env: static
+    buildCommand: ""
+    staticPublishPath: ./

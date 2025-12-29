@@ -1,87 +1,113 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const nodemailer = require('nodemailer');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Admin password
-const ADMIN_PASSWORD = 'sila0022';
-
 // Middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 app.use(express.static('.'));
 
-// Store contacts in memory (in production use database)
-let contacts = [];
+// Store contacts globally (shared for all users)
+let globalContacts = [];
 const CONTACTS_FILE = 'contacts.json';
+const COUNTER_FILE = 'counter.json';
 
 // Load existing contacts
 if (fs.existsSync(CONTACTS_FILE)) {
     try {
         const data = fs.readFileSync(CONTACTS_FILE, 'utf8');
-        contacts = JSON.parse(data);
+        globalContacts = JSON.parse(data);
     } catch (error) {
-        console.log('No existing contacts found, starting fresh');
+        console.log('Starting fresh contacts database');
     }
 }
 
 // Save contacts to file
 function saveContacts() {
-    fs.writeFileSync(CONTACTS_FILE, JSON.stringify(contacts, null, 2));
+    fs.writeFileSync(CONTACTS_FILE, JSON.stringify(globalContacts, null, 2));
 }
 
-// Email transporter setup
-let transporter;
-if (process.env.GMAIL_PASSWORD) {
-    transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'silatrix22@gmail.com',
-            pass: process.env.GMAIL_PASSWORD
-        }
+// Get real-time global count
+app.get('/api/global-count', (req, res) => {
+    res.json({
+        count: globalContacts.length,
+        target: 200,
+        remaining: Math.max(0, 200 - globalContacts.length),
+        progress: Math.min(100, Math.round((globalContacts.length / 200) * 100))
     });
-}
+});
 
-// Send email with contacts
-async function sendContactsToEmail() {
-    if (!transporter || contacts.length < 200) return;
+// Add contact to GLOBAL collection
+app.post('/api/add-contact', (req, res) => {
+    const { name, phone, photo } = req.body;
     
-    const vcfContent = generateVCFContent();
+    if (!name || !phone) {
+        return res.status(400).json({
+            success: false,
+            error: 'Name and phone are required'
+        });
+    }
     
-    const mailOptions = {
-        from: 'silatrix22@gmail.com',
-        to: 'silatrix22@gmail.com',
-        subject: '📱 NEW YEAR VCF Contacts Ready! 🎉',
-        text: `Contacts collected: ${contacts.length}\n\nVCF file attached.`,
-        attachments: [{
-            filename: 'NEW YEAR VCF 🎉.vcf',
-            content: vcfContent
-        }]
+    // Check if contact already exists (by phone number)
+    const existingContact = globalContacts.find(c => c.phone === phone);
+    if (existingContact) {
+        return res.json({
+            success: false,
+            message: 'This phone number is already registered'
+        });
+    }
+    
+    const newContact = {
+        id: Date.now(),
+        name: name.trim(),
+        phone: phone.trim(),
+        photo: photo || '',
+        timestamp: new Date().toISOString(),
+        ip: req.ip
     };
     
-    try {
-        await transporter.sendMail(mailOptions);
-        console.log('✅ Contacts sent to email');
-    } catch (error) {
-        console.error('❌ Email error:', error);
+    // Add to GLOBAL collection
+    globalContacts.push(newContact);
+    saveContacts();
+    
+    const newCount = globalContacts.length;
+    const targetReached = newCount >= 200;
+    
+    // If target reached, prepare VCF file
+    if (targetReached && newCount === 200) {
+        console.log(`🎉 TARGET REACHED! 200 contacts collected!`);
     }
-}
+    
+    res.json({
+        success: true,
+        message: 'Contact added successfully',
+        count: newCount,
+        targetReached: targetReached,
+        contact: newContact
+    });
+});
 
-// Generate VCF content
-function generateVCFContent() {
+// Download VCF file
+app.get('/api/download-vcf', (req, res) => {
+    if (globalContacts.length < 200) {
+        return res.status(400).json({
+            success: false,
+            message: 'Target not reached yet (200 contacts required)'
+        });
+    }
+    
     let vcfContent = '';
     
-    contacts.forEach(contact => {
+    globalContacts.forEach(contact => {
         vcfContent += `BEGIN:VCARD
 VERSION:3.0
-FN:🐢SILA🇹🇿 ${contact.name}
+FN:${contact.name}
 TEL:${contact.phone}
 `;
         
         if (contact.photo) {
-            const base64Data = contact.photo.split(',')[1];
+            const base64Data = contact.photo.split(',')[1] || contact.photo;
             vcfContent += `PHOTO;ENCODING=b;TYPE=JPEG:${base64Data}
 `;
         }
@@ -91,103 +117,67 @@ END:VCARD
 `;
     });
     
-    return vcfContent;
-}
+    res.setHeader('Content-Type', 'text/vcard');
+    res.setHeader('Content-Disposition', 'attachment; filename="NEW YEAR VCF 🎉.vcf"');
+    res.send(vcfContent);
+});
+
+// Get all contacts (for admin)
+app.get('/api/all-contacts', (req, res) => {
+    res.json({
+        success: true,
+        contacts: globalContacts,
+        total: globalContacts.length,
+        stats: {
+            today: globalContacts.filter(c => {
+                const today = new Date().toDateString();
+                return new Date(c.timestamp).toDateString() === today;
+            }).length,
+            withPhotos: globalContacts.filter(c => c.photo).length,
+            uniqueUsers: [...new Set(globalContacts.map(c => c.ip))].length
+        }
+    });
+});
+
+// Admin login (simple)
+app.post('/api/admin/login', (req, res) => {
+    const { password } = req.body;
+    
+    if (password === 'sila0022') {
+        res.json({
+            success: true,
+            token: 'admin_' + Date.now(),
+            message: 'Login successful'
+        });
+    } else {
+        res.status(401).json({
+            success: false,
+            message: 'Invalid password'
+        });
+    }
+});
 
 // Routes
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Get contact count
-app.get('/api/count', (req, res) => {
-    res.json({ 
-        count: contacts.length,
-        target: 200,
-        progress: Math.round((contacts.length / 200) * 100)
-    });
-});
-
-// Add contact
-app.post('/api/contacts', (req, res) => {
-    const { name, phone, photo } = req.body;
-    
-    if (!name || !phone) {
-        return res.status(400).json({ error: 'Name and phone are required' });
-    }
-    
-    const newContact = {
-        id: Date.now(),
-        name,
-        phone,
-        photo: photo || '',
-        timestamp: new Date().toISOString(),
-        ip: req.ip
-    };
-    
-    contacts.push(newContact);
-    saveContacts();
-    
-    // Check if target reached and send email
-    if (contacts.length === 200 && transporter) {
-        sendContactsToEmail();
-    }
-    
-    res.json({ 
-        success: true, 
-        count: contacts.length,
-        contact: newContact
-    });
-});
-
-// Download VCF
-app.get('/api/download-vcf', (req, res) => {
-    const vcfContent = generateVCFContent();
-    
-    res.setHeader('Content-Type', 'text/vcard');
-    res.setHeader('Content-Disposition', 'attachment; filename="NEW YEAR VCF 🎉.vcf"');
-    res.send(vcfContent);
-});
-
-// Admin panel route
 app.get('/admin', (req, res) => {
-    // Check if user is trying to access admin
-    const password = req.query.password;
-    if (password === ADMIN_PASSWORD) {
-        res.sendFile(path.join(__dirname, 'admin.html'));
-    } else {
-        // Redirect to main page with admin button visible
-        res.redirect('/?showAdmin=true');
-    }
+    res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
 // Health check
 app.get('/health', (req, res) => {
-    res.json({ 
-        status: 'OK', 
-        contacts: contacts.length,
+    res.json({
+        status: 'OK',
+        contacts: globalContacts.length,
         timestamp: new Date().toISOString()
     });
 });
 
-// Serve admin panel files
-app.get('/admin.html', (req, res) => {
-    res.redirect('/admin');
-});
-
-// 404 handler - redirect to main page
-app.use((req, res) => {
-    res.redirect('/');
-});
-
 app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
-    console.log(`📞 Total contacts: ${contacts.length}`);
-    console.log(`🔐 Admin access: http://localhost:${PORT}/admin?password=${ADMIN_PASSWORD}`);
-    console.log(`📧 Email: silatrix22@gmail.com`);
-    console.log(`🌐 Main site: http://localhost:${PORT}`);
-    console.log(`\n=== ADMIN CREDENTIALS ===`);
-    console.log(`Password: ${ADMIN_PASSWORD}`);
-    console.log(`Direct link: http://localhost:${PORT}/admin?password=${ADMIN_PASSWORD}`);
-    console.log(`=========================\n`);
+    console.log(`📞 Global contacts: ${globalContacts.length}`);
+    console.log(`🎯 Target: 200 contacts`);
+    console.log(`🌐 Open: http://localhost:${PORT}`);
 });

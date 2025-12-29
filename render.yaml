@@ -1,6 +1,20 @@
 services:
   - type: web
-    name: sila-vcf
-    env: static
-    buildCommand: ""
-    staticPublishPath: ./
+    name: sila-vcf-2026
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: NODE_ENV
+        value: production
+    healthCheckPath: /health
+    autoDeploy: true
+    domains:
+      - sila-vcf-2026.onrender.com
+    scaling:
+      minInstances: 1
+      maxInstances: 3
+      targetMemoryPercent: 80
+      targetCPUPercent: 70

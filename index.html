@@ -149,6 +149,12 @@
             animation: pulse 2s infinite;
         }
         
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 102, 255, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(0, 102, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 102, 255, 0); }
+        }
+        
         .counter-label {
             font-size: 1.2rem;
             color: var(--text-secondary);
@@ -241,6 +247,11 @@
             animation: slideInLeft 0.8s ease-out;
         }
         
+        @keyframes slideInLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
         .form-title {
             font-size: 1.8rem;
             margin-bottom: 30px;
@@ -287,39 +298,6 @@
             box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.2);
         }
         
-        .file-upload {
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 15px;
-        }
-        
-        .file-upload input {
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-        }
-        
-        .file-upload-label {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 18px 20px;
-            background: rgba(0, 8, 20, 0.8);
-            border: 2px dashed rgba(0, 102, 255, 0.3);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .file-upload-label:hover {
-            border-color: var(--primary);
-            background: rgba(0, 8, 20, 0.9);
-        }
-        
         .submit-btn {
             width: 100%;
             padding: 20px;
@@ -361,6 +339,11 @@
             border: 1px solid rgba(0, 102, 255, 0.2);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             animation: slideInRight 0.8s ease-out;
+        }
+        
+        @keyframes slideInRight {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
         
         .progress-header {
@@ -487,6 +470,47 @@
             box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
         }
         
+        /* Download Section */
+        .download-section {
+            text-align: center;
+            padding: 40px;
+            background: rgba(17, 34, 64, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            margin: 40px 0;
+            border: 2px solid var(--success);
+            display: none;
+            animation: pulse 2s infinite;
+        }
+        
+        .download-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--success);
+        }
+        
+        .download-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 102, 255, 0.4);
+        }
+        
         /* Success Message */
         .success-message {
             position: fixed;
@@ -550,44 +574,24 @@
             font-weight: 800;
         }
         
-        /* Real-time sync indicator */
-        .sync-indicator {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(17, 34, 64, 0.9);
-            padding: 10px 20px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.9rem;
-            border: 1px solid var(--primary);
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .sync-pulse {
-            width: 10px;
-            height: 10px;
-            background: var(--success);
+        /* Loading Animation */
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--text-secondary);
             border-radius: 50%;
-            animation: pulse 1.5s infinite;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
         }
         
-        /* Animations */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
         @keyframes slideUp {
             from { transform: translateY(50px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
-        }
-        
-        @keyframes slideInLeft {
-            from { transform: translateX(-50px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
-        @keyframes slideInRight {
-            from { transform: translateX(50px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
         }
         
         @keyframes fadeIn {
@@ -604,7 +608,6 @@
             .form-container, .progress-container { padding: 25px; }
             .whatsapp-links { grid-template-columns: 1fr; }
             .stats-container { grid-template-columns: repeat(2, 1fr); }
-            .sync-indicator { bottom: 10px; right: 10px; left: 10px; justify-content: center; }
         }
     </style>
 </head>
@@ -628,15 +631,15 @@
         
         <!-- Live Real-time Counter -->
         <div class="live-counter">
-            <div class="counter-label">LIVE CONTACTS COLLECTED</div>
+            <div class="counter-label">GLOBAL CONTACTS COLLECTED</div>
             <div class="counter-number" id="live-counter">0</div>
-            <div class="counter-sub">Real-time updates from all users</div>
+            <div class="counter-sub">Real-time shared counter for all users</div>
         </div>
         
         <!-- Stats -->
         <div class="stats-container">
             <div class="stat-card">
-                <span class="stat-number" id="target-count">200</span>
+                <span class="stat-number">200</span>
                 <span class="stat-label">Target</span>
             </div>
             <div class="stat-card">
@@ -648,8 +651,8 @@
                 <span class="stat-label">Progress</span>
             </div>
             <div class="stat-card">
-                <span class="stat-number" id="today-count">0</span>
-                <span class="stat-label">Today</span>
+                <span class="stat-number" id="server-status">✓</span>
+                <span class="stat-label">Status</span>
             </div>
         </div>
         
@@ -734,10 +737,19 @@
             </div>
         </div>
         
+        <!-- Download Section (Shows when 200 reached) -->
+        <div class="download-section" id="download-section">
+            <h2 class="download-title">🎉 TARGET REACHED! 🎉</h2>
+            <p>Download the exclusive VCF file with all 200 contacts</p>
+            <button class="download-btn" id="download-btn">
+                <i class="fas fa-download"></i> DOWNLOAD VCF
+            </button>
+        </div>
+        
         <!-- Footer -->
         <footer class="footer">
-            <p>Created by <span class="tech-name">SILA TECH</span> | Real-time VCF Contact Collector</p>
-            <p style="margin-top: 10px; font-size: 0.8rem;">Counter updates in real-time for all users</p>
+            <p>Created by <span class="tech-name">SILA TECH</span> | </p>
+            <p style="margin-top: 10px; font-size: 0.8rem;">Counter updates for all users</p>
         </footer>
     </div>
     
@@ -767,86 +779,7 @@
         </button>
     </div>
 
-    <!-- Real-time Sync Indicator -->
-    <div class="sync-indicator" id="sync-indicator" style="display: none;">
-        <div class="sync-pulse"></div>
-        <span>Syncing global counter...</span>
-    </div>
-
     <script>
-        // Firebase-like Real-time Database Simulation
-        // We'll use a mock backend service to simulate real-time updates
-        
-        class GlobalCounter {
-            constructor() {
-                this.count = 0;
-                this.listeners = [];
-                this.init();
-            }
-            
-            async init() {
-                // Try to get count from localStorage first
-                const saved = localStorage.getItem('globalContactCount');
-                if (saved) {
-                    this.count = parseInt(saved);
-                }
-                
-                // Simulate getting updates from server
-                setInterval(() => {
-                    this.updateCounter();
-                }, 3000);
-            }
-            
-            async updateCounter() {
-                // Simulate network delay
-                await new Promise(resolve => setTimeout(resolve, 500));
-                
-                // Get count from all users (simulated)
-                const allContacts = JSON.parse(localStorage.getItem('vcfContacts')) || [];
-                const sessionCount = parseInt(localStorage.getItem('sessionCount')) || 0;
-                
-                // Update count
-                this.count = Math.max(this.count, allContacts.length + sessionCount);
-                localStorage.setItem('globalContactCount', this.count);
-                
-                // Notify listeners
-                this.notifyListeners();
-            }
-            
-            addContact() {
-                // Increment local session count
-                let sessionCount = parseInt(localStorage.getItem('sessionCount')) || 0;
-                sessionCount++;
-                localStorage.setItem('sessionCount', sessionCount);
-                
-                // Update global count
-                this.count++;
-                localStorage.setItem('globalContactCount', this.count);
-                
-                // Notify listeners
-                this.notifyListeners();
-                
-                return this.count;
-            }
-            
-            addListener(callback) {
-                this.listeners.push(callback);
-                // Call immediately with current value
-                callback(this.count);
-            }
-            
-            notifyListeners() {
-                this.listeners.forEach(callback => callback(this.count));
-            }
-            
-            getCount() {
-                return this.count;
-            }
-        }
-        
-        // Initialize global counter
-        const globalCounter = new GlobalCounter();
-        
         // DOM elements
         const contactForm = document.getElementById('contact-form');
         const liveCounter = document.getElementById('live-counter');
@@ -854,55 +787,71 @@
         const progressCount = document.getElementById('progress-count');
         const progressPercent = document.getElementById('progress-percent');
         const progressFill = document.getElementById('progress-fill');
-        const targetCount = document.getElementById('target-count');
-        const todayCount = document.getElementById('today-count');
         const submitBtn = document.getElementById('submit-btn');
         const successMessage = document.getElementById('success-message');
         const closeSuccess = document.getElementById('close-success');
         const closeSuccessBtn = document.getElementById('close-success-btn');
-        const syncIndicator = document.getElementById('sync-indicator');
+        const downloadSection = document.getElementById('download-section');
+        const downloadBtn = document.getElementById('download-btn');
         const shareUrl = document.getElementById('share-url');
+        const serverStatus = document.getElementById('server-status');
         
         const MAX_CONTACTS = 200;
+        let currentCount = 0;
         
         // Initialize
         updateShareUrl();
+        loadCount();
+        setInterval(loadCount, 5000); // Refresh every 5 seconds
         
-        // Listen to global counter updates
-        globalCounter.addListener((count) => {
-            updateUI(count);
-            showSyncIndicator();
-            setTimeout(hideSyncIndicator, 2000);
-        });
+        // Load current count from server
+        async function loadCount() {
+            try {
+                const response = await fetch('/api/count');
+                if (!response.ok) throw new Error('Network response was not ok');
+                
+                const data = await response.json();
+                currentCount = data.count;
+                updateUI();
+                
+                // Update server status
+                serverStatus.textContent = '✓';
+                serverStatus.style.color = 'var(--success)';
+            } catch (error) {
+                console.log('Error loading count:', error);
+                serverStatus.textContent = '✗';
+                serverStatus.style.color = 'var(--warning)';
+            }
+        }
         
-        // Update UI with global count
-        function updateUI(count) {
-            const remaining = MAX_CONTACTS - count;
-            const percent = Math.min(100, Math.round((count / MAX_CONTACTS) * 100));
+        // Update UI with current count
+        function updateUI() {
+            const remaining = MAX_CONTACTS - currentCount;
+            const percent = Math.min(100, Math.round((currentCount / MAX_CONTACTS) * 100));
             
             // Update counters
-            liveCounter.textContent = count;
+            liveCounter.textContent = currentCount;
             remainingCount.textContent = remaining > 0 ? remaining : 0;
-            progressCount.textContent = `${count}/200`;
+            progressCount.textContent = `${currentCount}/200`;
             progressPercent.textContent = `${percent}%`;
             
             // Update progress bar
             progressFill.style.width = `${percent}%`;
             
-            // Update today's count
-            const today = new Date().toDateString();
-            const sessionCount = parseInt(localStorage.getItem('sessionCount')) || 0;
-            todayCount.textContent = sessionCount;
-            
             // Check if target reached
-            if (count >= MAX_CONTACTS) {
+            if (currentCount >= MAX_CONTACTS) {
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<i class="fas fa-trophy"></i> TARGET REACHED!';
+                downloadSection.style.display = 'block';
+            } else {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> ADD TO COLLECTION';
+                downloadSection.style.display = 'none';
             }
         }
         
         // Handle form submission
-        contactForm.addEventListener('submit', function(e) {
+        contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const name = document.getElementById('name').value.trim();
@@ -914,38 +863,49 @@
                 return;
             }
             
-            // Get current count
-            const currentCount = globalCounter.getCount();
-            
             // Check if we've reached the maximum
             if (currentCount >= MAX_CONTACTS) {
                 alert('Maximum of 200 contacts reached!');
                 return;
             }
             
-            // Add to global counter
-            const newCount = globalCounter.addContact();
+            // Disable submit button
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<div class="loader"></div> ADDING...';
+            submitBtn.disabled = true;
             
-            // Save contact locally
-            const contact = {
-                id: Date.now(),
-                name: name,
-                phone: phone,
-                timestamp: new Date().toISOString()
-            };
-            
-            let contacts = JSON.parse(localStorage.getItem('vcfContacts')) || [];
-            contacts.push(contact);
-            localStorage.setItem('vcfContacts', JSON.stringify(contacts));
-            
-            // Show success message
-            successMessage.classList.add('show');
-            
-            // Reset form
-            contactForm.reset();
-            
-            // Update UI immediately
-            updateUI(newCount);
+            try {
+                // Send to server
+                const response = await fetch('/api/contacts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name, phone })
+                });
+                
+                if (!response.ok) throw new Error('Failed to add contact');
+                
+                const data = await response.json();
+                
+                // Update local count
+                currentCount = data.count;
+                updateUI();
+                
+                // Show success message
+                successMessage.classList.add('show');
+                
+                // Reset form
+                contactForm.reset();
+                
+            } catch (error) {
+                console.log('Error:', error);
+                alert('Error adding contact. Please try again.');
+            } finally {
+                // Restore submit button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
         });
         
         // Close success message
@@ -964,15 +924,26 @@
             }
         });
         
-        // Show sync indicator
-        function showSyncIndicator() {
-            syncIndicator.style.display = 'flex';
-            setTimeout(hideSyncIndicator, 2000);
-        }
-        
-        function hideSyncIndicator() {
-            syncIndicator.style.display = 'none';
-        }
+        // Download VCF file
+        downloadBtn.addEventListener('click', async function() {
+            try {
+                const response = await fetch('/api/download-vcf');
+                if (!response.ok) throw new Error('Failed to download');
+                
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'New year VCF by SILA TECH.vcf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            } catch (error) {
+                console.log('Download error:', error);
+                alert('Error downloading VCF file');
+            }
+        });
         
         // Update share URL
         function updateShareUrl() {
@@ -988,27 +959,13 @@
             });
         }
         
-        // Add sample data for demonstration
-        function addSampleData() {
-            const stored = localStorage.getItem('sampleDataAdded');
-            if (!stored) {
-                // Add some initial contacts to show it's working
-                const sampleCount = 15;
-                localStorage.setItem('globalContactCount', sampleCount);
-                localStorage.setItem('sessionCount', 1);
-                localStorage.setItem('vcfContacts', JSON.stringify([
-                    { id: 1, name: "First User", phone: "+255 000 000 001", timestamp: new Date().toISOString() },
-                    { id: 2, name: "Second User", phone: "+255 000 000 002", timestamp: new Date().toISOString() }
-                ]));
-                localStorage.setItem('sampleDataAdded', 'true');
-                
-                // Update UI
-                updateUI(sampleCount);
+        // Auto-scroll to form if URL has hash
+        window.addEventListener('load', function() {
+            if (window.location.hash === '#join') {
+                contactForm.scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('name').focus();
             }
-        }
-        
-        // Initialize with sample data
-        setTimeout(addSampleData, 1000);
+        });
     </script>
 </body>
 </html>

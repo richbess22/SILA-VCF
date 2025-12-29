@@ -1,7 +1,7 @@
 {
   "name": "vcf-contact-collector",
-  "version": "1.0.0",
-  "description": "VCF Contact Collector by SILA TECH - Real-time shared contact collection system",
+  "version": "2.0.0",
+  "description": "VCF Contact Collector by SILA TECH with Admin Panel and Photo Upload",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -13,12 +13,15 @@
     "contacts",
     "whatsapp",
     "collector",
-    "sila-tech"
+    "sila-tech",
+    "admin",
+    "photo-upload"
   ],
   "author": "SILA TECH",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "nodemailer": "^6.9.7"
   },
   "engines": {
     "node": ">=16.0.0",
@@ -26,10 +29,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/vcf-contact-collector"
+    "url": "https://github.com/richbess22/SILA-VCF"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/vcf-contact-collector/issues"
+    "url": "https://github.com/richbess22/SILA-VCF/issues"
   },
-  "homepage": "https://github.com/yourusername/vcf-contact-collector#readme"
+  "homepage": "https://github.com/richbess22/SILA-VCF#readme"
 }

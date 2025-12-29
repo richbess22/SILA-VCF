@@ -161,7 +161,7 @@ app.get('/api/download-vcf', (req, res) => {
         globalContacts.forEach(contact => {
             vcfContent += `BEGIN:VCARD
 VERSION:3.0
-FN:${contact.name}
+FN:🐢SILA🇹🇿 ${contact.name}
 TEL:${contact.phone}
 `;
             

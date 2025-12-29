@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SILA TECH | VCF Collector</title>
+    <title>SILA TECH | VCF Collector 🎉</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -24,6 +24,7 @@
             --text-secondary: #8892b0;
             --success: #00ff88;
             --warning: #ffcc00;
+            --danger: #ff4444;
             --gradient: linear-gradient(135deg, #0066ff 0%, #00d4ff 100%);
             --gradient-dark: linear-gradient(135deg, #000814 0%, #0a192f 100%);
         }
@@ -36,7 +37,28 @@
             position: relative;
         }
         
-        /* Animated Background Elements */
+        /* Admin Access Link (HIDDEN) */
+        .admin-access {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 102, 255, 0.3);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            z-index: 1000;
+            opacity: 0.3;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-access:hover {
+            opacity: 1;
+            background: rgba(0, 102, 255, 0.2);
+            color: var(--primary);
+        }
+        
         .bg-elements {
             position: fixed;
             top: 0;
@@ -96,7 +118,6 @@
             z-index: 1;
         }
         
-        /* Header */
         .header {
             text-align: center;
             padding: 40px 0;
@@ -137,7 +158,6 @@
             line-height: 1.5;
         }
         
-        /* Live Counter */
         .live-counter {
             background: rgba(17, 34, 64, 0.7);
             backdrop-filter: blur(10px);
@@ -180,7 +200,6 @@
             font-size: 1rem;
         }
         
-        /* Stats */
         .stats-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -197,6 +216,11 @@
             border: 1px solid rgba(0, 102, 255, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             animation: slideUp 0.6s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
         
         .stat-card:hover {
@@ -222,7 +246,6 @@
             letter-spacing: 1.5px;
         }
         
-        /* Main Layout */
         .main-layout {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -236,7 +259,6 @@
             }
         }
         
-        /* Form */
         .form-container {
             background: rgba(17, 34, 64, 0.7);
             backdrop-filter: blur(10px);
@@ -298,6 +320,81 @@
             box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.2);
         }
         
+        .photo-upload {
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .photo-preview {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .preview-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .photo-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .photo-btn {
+            padding: 8px 15px;
+            background: rgba(0, 102, 255, 0.2);
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .photo-btn:hover {
+            background: var(--primary);
+        }
+        
+        .photo-dropzone {
+            border: 2px dashed var(--primary);
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(0, 8, 20, 0.5);
+        }
+        
+        .photo-dropzone:hover {
+            background: rgba(0, 102, 255, 0.1);
+            border-color: var(--accent);
+        }
+        
+        .photo-dropzone i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .photo-input {
+            display: none;
+        }
+        
         .submit-btn {
             width: 100%;
             padding: 20px;
@@ -330,7 +427,6 @@
             box-shadow: none;
         }
         
-        /* Progress Section */
         .progress-container {
             background: rgba(17, 34, 64, 0.7);
             backdrop-filter: blur(10px);
@@ -423,7 +519,6 @@
             margin-bottom: 30px;
         }
         
-        /* WhatsApp Links */
         .whatsapp-links {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -470,7 +565,6 @@
             box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
         }
         
-        /* Download Section */
         .download-section {
             text-align: center;
             padding: 40px;
@@ -511,7 +605,6 @@
             box-shadow: 0 15px 35px rgba(0, 102, 255, 0.4);
         }
         
-        /* Success Message */
         .success-message {
             position: fixed;
             top: 50%;
@@ -556,7 +649,6 @@
             color: var(--text);
         }
         
-        /* Footer */
         .footer {
             text-align: center;
             padding: 30px 0;
@@ -574,7 +666,6 @@
             font-weight: 800;
         }
         
-        /* Loading Animation */
         .loader {
             display: inline-block;
             width: 20px;
@@ -589,17 +680,6 @@
             to { transform: rotate(360deg); }
         }
         
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        /* Mobile Responsive */
         @media (max-width: 768px) {
             .title { font-size: 2rem; }
             .subtitle { font-size: 1rem; }
@@ -608,10 +688,16 @@
             .form-container, .progress-container { padding: 25px; }
             .whatsapp-links { grid-template-columns: 1fr; }
             .stats-container { grid-template-columns: repeat(2, 1fr); }
+            .admin-access { top: 10px; right: 10px; font-size: 0.7rem; padding: 5px 10px; }
         }
     </style>
 </head>
 <body>
+    <!-- Admin Access Link (Hidden) -->
+    <div class="admin-access" onclick="window.location.href='/admin?password=sila0022'" title="Admin Access">
+        <i class="fas fa-user-shield"></i> Admin
+    </div>
+    
     <!-- Animated Background -->
     <div class="bg-elements">
         <div class="circle"></div>
@@ -625,15 +711,15 @@
             <div class="logo">
                 <i class="fas fa-address-card"></i>
             </div>
-            <h1 class="title">VCF COLLECTOR</h1>
-            <p class="subtitle">Join 200 contacts to unlock exclusive VCF file</p>
+            <h1 class="title">SILA VCF COLLECTOR 🎉</h1>
+            <p class="subtitle">Join 200 contacts to unlock NEW YEAR VCF 🎉 file</p>
         </header>
         
-        <!-- Live Real-time Counter -->
+        <!-- Live Counter -->
         <div class="live-counter">
             <div class="counter-label">GLOBAL CONTACTS COLLECTED</div>
             <div class="counter-number" id="live-counter">0</div>
-            <div class="counter-sub">Real-time shared counter for all users</div>
+            <div class="counter-sub">Real-time counter shared by all users</div>
         </div>
         
         <!-- Stats -->
@@ -665,12 +751,38 @@
                 <form id="contact-form">
                     <div class="input-group">
                         <label class="input-label">Your Name</label>
-                        <input type="text" class="input-field" id="name" placeholder="Enter your name" required>
+                        <input type="text" class="input-field" id="name" placeholder="Enter your full name" required>
                     </div>
                     
                     <div class="input-group">
                         <label class="input-label">Phone Number</label>
-                        <input type="tel" class="input-field" id="phone" placeholder="Your phone number" required>
+                        <input type="tel" class="input-field" id="phone" placeholder="Your WhatsApp number" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">Profile Photo (Optional)</label>
+                        <div class="photo-upload">
+                            <div class="photo-dropzone" id="photoDropzone">
+                                <i class="fas fa-camera"></i>
+                                <p>Click to upload photo or drag & drop</p>
+                                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 10px;">
+                                   
+                                </p>
+                                <input type="file" id="photoInput" class="photo-input" accept="image/*" capture="user">
+                            </div>
+                            
+                            <div class="photo-preview" id="photoPreview">
+                                <img class="preview-img" id="previewImage" alt="Photo Preview">
+                                <div class="photo-actions">
+                                    <button type="button" class="photo-btn" id="changePhotoBtn">
+                                        <i class="fas fa-sync"></i> Change
+                                    </button>
+                                    <button type="button" class="photo-btn" id="removePhotoBtn">
+                                        <i class="fas fa-trash"></i> Remove
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <button type="submit" class="submit-btn" id="submit-btn">
@@ -679,7 +791,7 @@
                 </form>
                 
                 <div style="margin-top: 25px; text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
-                    <p>Share this link with others to grow the collection</p>
+                    <p>Share this link to grow the collection faster</p>
                     <div style="background: rgba(0, 8, 20, 0.5); padding: 10px; border-radius: 8px; margin-top: 10px; word-break: break-all;">
                         <span id="share-url">Loading...</span>
                         <button onclick="copyShareLink()" style="background: var(--primary); color: white; border: none; padding: 5px 10px; border-radius: 5px; margin-left: 10px; cursor: pointer;">
@@ -706,8 +818,12 @@
                 </div>
                 
                 <div style="text-align: center; margin-top: 30px; padding: 20px; background: rgba(0, 8, 20, 0.5); border-radius: 10px;">
-                    <h3 style="margin-bottom: 10px; color: var(--accent);">🔥 BOOST WHATSAPP STATUS</h3>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Increase your status views and reach more people</p>
+                    <h3 style="margin-bottom: 10px; color: var(--accent);">
+                        <i class="fas fa-fire"></i> BOOST WHATSAPP STATUS
+                    </h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                        Increase your status views and reach more people
+                    </p>
                 </div>
             </div>
         </div>
@@ -737,33 +853,32 @@
             </div>
         </div>
         
-        <!-- Download Section (Shows when 200 reached) -->
+        <!-- Download Section -->
         <div class="download-section" id="download-section">
             <h2 class="download-title">🎉 TARGET REACHED! 🎉</h2>
-            <p>Download the exclusive VCF file with all 200 contacts</p>
+            <p>Download the exclusive NEW YEAR VCF 🎉 file</p>
             <button class="download-btn" id="download-btn">
-                <i class="fas fa-download"></i> DOWNLOAD VCF
+                <i class="fas fa-download"></i> DOWNLOAD NEW YEAR VCF 🎉
             </button>
+            <p style="margin-top: 15px; color: var(--text-secondary); font-size: 0.9rem;">
+                VCF file sent to silatrix22@gmail.com automatically
+            </p>
         </div>
         
         <!-- Footer -->
         <footer class="footer">
-            <p>Created by <span class="tech-name">SILA TECH</span> | </p>
-            <p style="margin-top: 10px; font-size: 0.8rem;">Counter updates for all users</p>
+            <p>Created by <span class="tech-name">SILA TECH</span></p>
         </footer>
     </div>
     
-    <!-- Success Message Popup -->
+    <!-- Success Message -->
     <div class="success-message" id="success-message">
         <button class="close-success" id="close-success">&times;</button>
         <div style="font-size: 4rem; margin-bottom: 20px; color: var(--success);">
             <i class="fas fa-check-circle"></i>
         </div>
-        <h2 style="margin-bottom: 20px;">CONTACT ADDED!</h2>
+        <h2 style="margin-bottom: 20px;">CONTACT ADDED! 🎉</h2>
         <p>Your contact has been added to the global collection</p>
-        <p style="color: var(--text-secondary); margin: 15px 0; font-size: 0.9rem;">
-            Share the link with friends to reach 200 faster!
-        </p>
         
         <div style="margin: 25px 0;">
             <a href="https://chat.whatsapp.com/Be9v56VJm8kJLrJfuzvWL0" target="_blank" class="whatsapp-btn" style="margin: 10px;">
@@ -774,7 +889,7 @@
             </a>
         </div>
         
-        <button class="submit-btn" id="close-success-btn" style="margin-top: 20px; padding: 15px; background: var(--primary);">
+        <button class="submit-btn" id="close-success-btn" style="margin-top: 20px; padding: 15px;">
             CONTINUE
         </button>
     </div>
@@ -796,13 +911,89 @@
         const shareUrl = document.getElementById('share-url');
         const serverStatus = document.getElementById('server-status');
         
+        // Photo upload elements
+        const photoInput = document.getElementById('photoInput');
+        const photoDropzone = document.getElementById('photoDropzone');
+        const photoPreview = document.getElementById('photoPreview');
+        const previewImage = document.getElementById('previewImage');
+        const changePhotoBtn = document.getElementById('changePhotoBtn');
+        const removePhotoBtn = document.getElementById('removePhotoBtn');
+        
         const MAX_CONTACTS = 200;
         let currentCount = 0;
+        let photoBase64 = '';
         
         // Initialize
         updateShareUrl();
         loadCount();
-        setInterval(loadCount, 5000); // Refresh every 5 seconds
+        setInterval(loadCount, 5000);
+        
+        // Photo upload handling
+        photoDropzone.addEventListener('click', () => photoInput.click());
+        photoInput.addEventListener('change', handlePhotoUpload);
+        changePhotoBtn.addEventListener('click', () => photoInput.click());
+        removePhotoBtn.addEventListener('click', () => {
+            photoInput.value = '';
+            photoPreview.style.display = 'none';
+            photoBase64 = '';
+        });
+        
+        // Drag and drop
+        photoDropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            photoDropzone.style.borderColor = 'var(--accent)';
+            photoDropzone.style.background = 'rgba(0, 102, 255, 0.2)';
+        });
+        
+        photoDropzone.addEventListener('dragleave', () => {
+            photoDropzone.style.borderColor = 'var(--primary)';
+            photoDropzone.style.background = 'rgba(0, 8, 20, 0.5)';
+        });
+        
+        photoDropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            photoDropzone.style.borderColor = 'var(--primary)';
+            photoDropzone.style.background = 'rgba(0, 8, 20, 0.5)';
+            
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                readImageFile(file);
+            }
+        });
+        
+        function handlePhotoUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                readImageFile(file);
+            }
+        }
+        
+        function readImageFile(file) {
+            if (file.size > 2 * 1024 * 1024) {
+                alert('Image size should be less than 2MB');
+                return;
+            }
+            
+            if (!file.type.match('image.*')) {
+                alert('Please select an image file');
+                return;
+            }
+            
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                photoBase64 = e.target.result;
+                previewImage.src = photoBase64;
+                photoPreview.style.display = 'block';
+            };
+            
+            reader.onerror = function() {
+                alert('Error reading image file');
+                photoInput.value = '';
+            };
+            
+            reader.readAsDataURL(file);
+        }
         
         // Load current count from server
         async function loadCount() {
@@ -814,7 +1005,6 @@
                 currentCount = data.count;
                 updateUI();
                 
-                // Update server status
                 serverStatus.textContent = '✓';
                 serverStatus.style.color = 'var(--success)';
             } catch (error) {
@@ -829,16 +1019,12 @@
             const remaining = MAX_CONTACTS - currentCount;
             const percent = Math.min(100, Math.round((currentCount / MAX_CONTACTS) * 100));
             
-            // Update counters
             liveCounter.textContent = currentCount;
             remainingCount.textContent = remaining > 0 ? remaining : 0;
             progressCount.textContent = `${currentCount}/200`;
             progressPercent.textContent = `${percent}%`;
-            
-            // Update progress bar
             progressFill.style.width = `${percent}%`;
             
-            // Check if target reached
             if (currentCount >= MAX_CONTACTS) {
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<i class="fas fa-trophy"></i> TARGET REACHED!';
@@ -857,71 +1043,53 @@
             const name = document.getElementById('name').value.trim();
             const phone = document.getElementById('phone').value.trim();
             
-            // Validate inputs
             if (!name || !phone) {
                 alert('Please fill in all required fields');
                 return;
             }
             
-            // Check if we've reached the maximum
             if (currentCount >= MAX_CONTACTS) {
                 alert('Maximum of 200 contacts reached!');
                 return;
             }
             
-            // Disable submit button
             const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<div class="loader"></div> ADDING...';
             submitBtn.disabled = true;
             
             try {
-                // Send to server
                 const response = await fetch('/api/contacts', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ name, phone })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, phone, photo: photoBase64 })
                 });
                 
                 if (!response.ok) throw new Error('Failed to add contact');
                 
                 const data = await response.json();
-                
-                // Update local count
                 currentCount = data.count;
                 updateUI();
                 
-                // Show success message
                 successMessage.classList.add('show');
-                
-                // Reset form
                 contactForm.reset();
+                photoPreview.style.display = 'none';
+                photoBase64 = '';
+                photoInput.value = '';
                 
             } catch (error) {
                 console.log('Error:', error);
                 alert('Error adding contact. Please try again.');
             } finally {
-                // Restore submit button
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
             }
         });
         
-        // Close success message
-        closeSuccess.addEventListener('click', function() {
-            successMessage.classList.remove('show');
-        });
-        
-        closeSuccessBtn.addEventListener('click', function() {
-            successMessage.classList.remove('show');
-        });
-        
-        // Close success message when clicking outside
-        successMessage.addEventListener('click', function(e) {
-            if (e.target === successMessage) {
-                successMessage.classList.remove('show');
-            }
+        // Success message handlers
+        closeSuccess.addEventListener('click', () => successMessage.classList.remove('show'));
+        closeSuccessBtn.addEventListener('click', () => successMessage.classList.remove('show'));
+        successMessage.addEventListener('click', (e) => {
+            if (e.target === successMessage) successMessage.classList.remove('show');
         });
         
         // Download VCF file
@@ -934,7 +1102,7 @@
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'New year VCF by SILA TECH.vcf';
+                a.download = 'NEW YEAR VCF 🎉.vcf';
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
@@ -945,13 +1113,12 @@
             }
         });
         
-        // Update share URL
+        // Share link functions
         function updateShareUrl() {
             const url = window.location.href;
             shareUrl.textContent = url;
         }
         
-        // Copy share link
         function copyShareLink() {
             const url = window.location.href;
             navigator.clipboard.writeText(url).then(() => {
@@ -964,6 +1131,17 @@
             if (window.location.hash === '#join') {
                 contactForm.scrollIntoView({ behavior: 'smooth' });
                 document.getElementById('name').focus();
+            }
+            
+            // Check URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('showAdmin') === 'true') {
+                const adminLink = document.querySelector('.admin-access');
+                if (adminLink) {
+                    adminLink.style.opacity = '1';
+                    adminLink.style.background = 'rgba(0, 102, 255, 0.3)';
+                    adminLink.style.color = 'var(--primary)';
+                }
             }
         });
     </script>

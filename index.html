@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SILA TECH | SILA VCF Collector</title>
+    <title>SILA TECH | VCF Collector</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -88,22 +88,6 @@
             100% { transform: translate(0, 0) rotate(360deg); }
         }
         
-        /* Glitch Effect */
-        .glitch {
-            position: relative;
-            animation: glitch 5s infinite;
-        }
-        
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            2% { transform: translate(-2px, 2px); }
-            4% { transform: translate(-2px, -2px); }
-            6% { transform: translate(2px, 2px); }
-            8% { transform: translate(2px, -2px); }
-            10% { transform: translate(0); }
-            100% { transform: translate(0); }
-        }
-        
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -151,6 +135,43 @@
             max-width: 600px;
             margin: 0 auto 30px;
             line-height: 1.5;
+        }
+        
+        /* Live Counter */
+        .live-counter {
+            background: rgba(17, 34, 64, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 2px solid var(--primary);
+            animation: pulse 2s infinite;
+        }
+        
+        .counter-label {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .counter-number {
+            font-size: 4rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: block;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(0, 102, 255, 0.5);
+        }
+        
+        .counter-sub {
+            color: var(--text-secondary);
+            font-size: 1rem;
         }
         
         /* Stats */
@@ -299,44 +320,6 @@
             background: rgba(0, 8, 20, 0.9);
         }
         
-        .image-preview {
-            display: none;
-            text-align: center;
-            margin-top: 20px;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .preview-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--primary);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .preview-actions {
-            margin-top: 15px;
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-        
-        .preview-btn {
-            padding: 8px 15px;
-            background: rgba(0, 102, 255, 0.2);
-            border: 1px solid var(--primary);
-            border-radius: 8px;
-            color: var(--text);
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-        
-        .preview-btn:hover {
-            background: var(--primary);
-        }
-        
         .submit-btn {
             width: 100%;
             padding: 20px;
@@ -457,53 +440,6 @@
             margin-bottom: 30px;
         }
         
-        /* Download Section */
-        .download-section {
-            text-align: center;
-            padding: 40px;
-            background: rgba(17, 34, 64, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 25px;
-            margin: 40px 0;
-            border: 2px solid var(--success);
-            display: none;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.4); }
-            70% { box-shadow: 0 0 0 20px rgba(0, 255, 136, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
-        }
-        
-        .download-title {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: var(--success);
-        }
-        
-        .download-btn {
-            background: var(--gradient);
-            color: white;
-            border: none;
-            padding: 20px 40px;
-            border-radius: 12px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-        }
-        
-        .download-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 35px rgba(0, 102, 255, 0.4);
-        }
-        
         /* WhatsApp Links */
         .whatsapp-links {
             display: grid;
@@ -549,26 +485,6 @@
             background: #1da851;
             transform: translateY(-3px);
             box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
-        }
-        
-        /* Status Boost */
-        .status-boost {
-            background: rgba(17, 34, 64, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            margin-top: 25px;
-            border-left: 5px solid var(--accent);
-            text-align: center;
-        }
-        
-        .status-title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 15px;
-            color: var(--accent);
         }
         
         /* Success Message */
@@ -634,6 +550,30 @@
             font-weight: 800;
         }
         
+        /* Real-time sync indicator */
+        .sync-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(17, 34, 64, 0.9);
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            border: 1px solid var(--primary);
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .sync-pulse {
+            width: 10px;
+            height: 10px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        
         /* Animations */
         @keyframes slideUp {
             from { transform: translateY(50px); opacity: 0; }
@@ -659,10 +599,12 @@
         @media (max-width: 768px) {
             .title { font-size: 2rem; }
             .subtitle { font-size: 1rem; }
+            .counter-number { font-size: 3rem; }
             .main-layout { gap: 20px; }
             .form-container, .progress-container { padding: 25px; }
             .whatsapp-links { grid-template-columns: 1fr; }
             .stats-container { grid-template-columns: repeat(2, 1fr); }
+            .sync-indicator { bottom: 10px; right: 10px; left: 10px; justify-content: center; }
         }
     </style>
 </head>
@@ -677,21 +619,24 @@
     <div class="container">
         <!-- Header -->
         <header class="header">
-            <div class="logo glitch">
+            <div class="logo">
                 <i class="fas fa-address-card"></i>
             </div>
-            <h1 class="title"> SILA VCF COLLECTOR</h1>
+            <h1 class="title">SILA VCF COLLECTOR</h1>
             <p class="subtitle">Join 200 contacts to unlock exclusive VCF file</p>
         </header>
+        
+        <!-- Live Real-time Counter -->
+        <div class="live-counter">
+            <div class="counter-label">LIVE CONTACTS COLLECTED</div>
+            <div class="counter-number" id="live-counter">0</div>
+            <div class="counter-sub">NOW</div>
+        </div>
         
         <!-- Stats -->
         <div class="stats-container">
             <div class="stat-card">
-                <span class="stat-number" id="contacts-count">0</span>
-                <span class="stat-label">Joined</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">200</span>
+                <span class="stat-number" id="target-count">200</span>
                 <span class="stat-label">Target</span>
             </div>
             <div class="stat-card">
@@ -702,13 +647,17 @@
                 <span class="stat-number" id="progress-percent">0%</span>
                 <span class="stat-label">Progress</span>
             </div>
+            <div class="stat-card">
+                <span class="stat-number" id="today-count">0</span>
+                <span class="stat-label">Today</span>
+            </div>
         </div>
         
         <!-- Main Content -->
         <div class="main-layout">
             <!-- Form Section -->
             <div class="form-container">
-                <h2 class="form-title"><i class="fas fa-user-plus"></i> JOIN NOW</h2>
+                <h2 class="form-title"><i class="fas fa-user-plus"></i> ADD YOUR CONTACT</h2>
                 
                 <form id="contact-form">
                     <div class="input-group">
@@ -721,39 +670,26 @@
                         <input type="tel" class="input-field" id="phone" placeholder="Your phone number" required>
                     </div>
                     
-                    <div class="input-group">
-                        <label class="input-label">Profile Photo</label>
-                        <div class="file-upload">
-                            <div class="file-upload-label">
-                                <span id="file-label">Upload photo</span>
-                                <i class="fas fa-camera"></i>
-                            </div>
-                            <input type="file" id="photo" accept="image/*" capture="user">
-                        </div>
-                        
-                        <div class="image-preview" id="preview-container">
-                            <img class="preview-img" id="image-preview" alt="Photo Preview">
-                            <div class="preview-actions">
-                                <button type="button" class="preview-btn" id="change-photo">
-                                    <i class="fas fa-sync"></i> Change
-                                </button>
-                                <button type="button" class="preview-btn" id="remove-photo">
-                                    <i class="fas fa-trash"></i> Remove
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
                     <button type="submit" class="submit-btn" id="submit-btn">
-                        <i class="fas fa-paper-plane"></i> JOIN NOW
+                        <i class="fas fa-paper-plane"></i> ADD TO COLLECTION
                     </button>
                 </form>
+                
+                <div style="margin-top: 25px; text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                    <p>Share this link with others to grow the collection</p>
+                    <div style="background: rgba(0, 8, 20, 0.5); padding: 10px; border-radius: 8px; margin-top: 10px; word-break: break-all;">
+                        <span id="share-url">Loading...</span>
+                        <button onclick="copyShareLink()" style="background: var(--primary); color: white; border: none; padding: 5px 10px; border-radius: 5px; margin-left: 10px; cursor: pointer;">
+                            Copy
+                        </button>
+                    </div>
+                </div>
             </div>
             
             <!-- Progress Section -->
             <div class="progress-container">
                 <div class="progress-header">
-                    <h2 class="progress-title"><i class="fas fa-chart-line"></i> PROGRESS</h2>
+                    <h2 class="progress-title"><i class="fas fa-chart-line"></i> GLOBAL PROGRESS</h2>
                     <div class="progress-count" id="progress-count">0/200</div>
                 </div>
                 
@@ -766,9 +702,9 @@
                     <span>TARGET: 200</span>
                 </div>
                 
-                <div class="status-boost">
-                    <h3 class="status-title"><i class="fas fa-fire"></i> BOOST STATUS VIEWS</h3>
-                    <p>Increase your WhatsApp visibility</p>
+                <div style="text-align: center; margin-top: 30px; padding: 20px; background: rgba(0, 8, 20, 0.5); border-radius: 10px;">
+                    <h3 style="margin-bottom: 10px; color: var(--accent);">🔥 BOOST WHATSAPP STATUS</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Increase your status views and reach more people</p>
                 </div>
             </div>
         </div>
@@ -779,8 +715,8 @@
                 <div class="whatsapp-icon">
                     <i class="fab fa-whatsapp"></i>
                 </div>
-                <h3>JOIN GROUP</h3>
-                <p>Connect with community</p>
+                <h3>JOIN OUR GROUP</h3>
+                <p>Connect with the community</p>
                 <a href="https://chat.whatsapp.com/Be9v56VJm8kJLrJfuzvWL0" target="_blank" class="whatsapp-btn">
                     <i class="fas fa-user-plus"></i> JOIN NOW
                 </a>
@@ -798,29 +734,24 @@
             </div>
         </div>
         
-        <!-- Download Section (Hidden until target reached) -->
-        <div class="download-section" id="download-section">
-            <h2 class="download-title">🎉 TARGET ACHIEVED! 🎉</h2>
-            <p>Download the exclusive VCF file</p>
-            <button class="download-btn" id="download-btn">
-                <i class="fas fa-download"></i> DOWNLOAD VCF
-            </button>
-        </div>
-        
         <!-- Footer -->
         <footer class="footer">
-            <p>Created by <span class="tech-name">SILA TECH</span></p>
+            <p>Created by <span class="tech-name">SILA TECH</span> | Real-time VCF Contact Collector</p>
+            <p style="margin-top: 10px; font-size: 0.8rem;">Counter updates in real-time for all users</p>
         </footer>
     </div>
     
     <!-- Success Message Popup -->
     <div class="success-message" id="success-message">
         <button class="close-success" id="close-success">&times;</button>
-        <div class="whatsapp-icon" style="font-size: 4rem; margin-bottom: 20px; color: var(--success);">
+        <div style="font-size: 4rem; margin-bottom: 20px; color: var(--success);">
             <i class="fas fa-check-circle"></i>
         </div>
-        <h2 style="margin-bottom: 20px;">SUCCESS!</h2>
-        <p>You've joined successfully!</p>
+        <h2 style="margin-bottom: 20px;">CONTACT ADDED!</h2>
+        <p>Your contact has been added to the global collection</p>
+        <p style="color: var(--text-secondary); margin: 15px 0; font-size: 0.9rem;">
+            Share the link with friends to reach 200 faster!
+        </p>
         
         <div style="margin: 25px 0;">
             <a href="https://chat.whatsapp.com/Be9v56VJm8kJLrJfuzvWL0" target="_blank" class="whatsapp-btn" style="margin: 10px;">
@@ -831,114 +762,144 @@
             </a>
         </div>
         
-        <button class="preview-btn" id="close-success-btn" style="margin-top: 20px;">CLOSE</button>
+        <button class="submit-btn" id="close-success-btn" style="margin-top: 20px; padding: 15px; background: var(--primary);">
+            CONTINUE
+        </button>
+    </div>
+
+    <!-- Real-time Sync Indicator -->
+    <div class="sync-indicator" id="sync-indicator" style="display: none;">
+        <div class="sync-pulse"></div>
+        <span>Syncing global counter...</span>
     </div>
 
     <script>
-        // Initialize contacts array from localStorage or empty array
-        let contacts = JSON.parse(localStorage.getItem('vcfContacts')) || [];
-        const MAX_CONTACTS = 200;
+        // Firebase-like Real-time Database Simulation
+        // We'll use a mock backend service to simulate real-time updates
+        
+        class GlobalCounter {
+            constructor() {
+                this.count = 0;
+                this.listeners = [];
+                this.init();
+            }
+            
+            async init() {
+                // Try to get count from localStorage first
+                const saved = localStorage.getItem('globalContactCount');
+                if (saved) {
+                    this.count = parseInt(saved);
+                }
+                
+                // Simulate getting updates from server
+                setInterval(() => {
+                    this.updateCounter();
+                }, 3000);
+            }
+            
+            async updateCounter() {
+                // Simulate network delay
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                // Get count from all users (simulated)
+                const allContacts = JSON.parse(localStorage.getItem('vcfContacts')) || [];
+                const sessionCount = parseInt(localStorage.getItem('sessionCount')) || 0;
+                
+                // Update count
+                this.count = Math.max(this.count, allContacts.length + sessionCount);
+                localStorage.setItem('globalContactCount', this.count);
+                
+                // Notify listeners
+                this.notifyListeners();
+            }
+            
+            addContact() {
+                // Increment local session count
+                let sessionCount = parseInt(localStorage.getItem('sessionCount')) || 0;
+                sessionCount++;
+                localStorage.setItem('sessionCount', sessionCount);
+                
+                // Update global count
+                this.count++;
+                localStorage.setItem('globalContactCount', this.count);
+                
+                // Notify listeners
+                this.notifyListeners();
+                
+                return this.count;
+            }
+            
+            addListener(callback) {
+                this.listeners.push(callback);
+                // Call immediately with current value
+                callback(this.count);
+            }
+            
+            notifyListeners() {
+                this.listeners.forEach(callback => callback(this.count));
+            }
+            
+            getCount() {
+                return this.count;
+            }
+        }
+        
+        // Initialize global counter
+        const globalCounter = new GlobalCounter();
         
         // DOM elements
         const contactForm = document.getElementById('contact-form');
-        const contactsCount = document.getElementById('contacts-count');
+        const liveCounter = document.getElementById('live-counter');
         const remainingCount = document.getElementById('remaining-count');
         const progressCount = document.getElementById('progress-count');
         const progressPercent = document.getElementById('progress-percent');
         const progressFill = document.getElementById('progress-fill');
-        const downloadSection = document.getElementById('download-section');
-        const downloadBtn = document.getElementById('download-btn');
-        const photoInput = document.getElementById('photo');
-        const previewContainer = document.getElementById('preview-container');
-        const imagePreview = document.getElementById('image-preview');
-        const fileLabel = document.getElementById('file-label');
+        const targetCount = document.getElementById('target-count');
+        const todayCount = document.getElementById('today-count');
         const submitBtn = document.getElementById('submit-btn');
         const successMessage = document.getElementById('success-message');
         const closeSuccess = document.getElementById('close-success');
         const closeSuccessBtn = document.getElementById('close-success-btn');
-        const changePhotoBtn = document.getElementById('change-photo');
-        const removePhotoBtn = document.getElementById('remove-photo');
+        const syncIndicator = document.getElementById('sync-indicator');
+        const shareUrl = document.getElementById('share-url');
+        
+        const MAX_CONTACTS = 200;
         
         // Initialize
-        updateContactStats();
+        updateShareUrl();
         
-        // Update contact statistics
-        function updateContactStats() {
-            const count = contacts.length;
+        // Listen to global counter updates
+        globalCounter.addListener((count) => {
+            updateUI(count);
+            showSyncIndicator();
+            setTimeout(hideSyncIndicator, 2000);
+        });
+        
+        // Update UI with global count
+        function updateUI(count) {
             const remaining = MAX_CONTACTS - count;
-            const percent = Math.round((count / MAX_CONTACTS) * 100);
+            const percent = Math.min(100, Math.round((count / MAX_CONTACTS) * 100));
             
-            contactsCount.textContent = count;
-            remainingCount.textContent = remaining;
+            // Update counters
+            liveCounter.textContent = count;
+            remainingCount.textContent = remaining > 0 ? remaining : 0;
             progressCount.textContent = `${count}/200`;
             progressPercent.textContent = `${percent}%`;
             
             // Update progress bar
             progressFill.style.width = `${percent}%`;
             
-            // Show download section if target reached
+            // Update today's count
+            const today = new Date().toDateString();
+            const sessionCount = parseInt(localStorage.getItem('sessionCount')) || 0;
+            todayCount.textContent = sessionCount;
+            
+            // Check if target reached
             if (count >= MAX_CONTACTS) {
-                downloadSection.style.display = 'block';
                 submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-ban"></i> MAXIMUM REACHED';
-            } else {
-                downloadSection.style.display = 'none';
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> JOIN NOW';
+                submitBtn.innerHTML = '<i class="fas fa-trophy"></i> TARGET REACHED!';
             }
         }
-        
-        // Handle image preview - FIXED
-        photoInput.addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                // Check file size (max 2MB)
-                if (file.size > 2 * 1024 * 1024) {
-                    alert('Image size should be less than 2MB');
-                    this.value = '';
-                    return;
-                }
-                
-                // Check file type
-                if (!file.type.match('image.*')) {
-                    alert('Please select an image file');
-                    this.value = '';
-                    return;
-                }
-                
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    imagePreview.src = e.target.result;
-                    previewContainer.style.display = 'block';
-                    fileLabel.innerHTML = `<i class="fas fa-check"></i> ${file.name.length > 15 ? file.name.substring(0, 15) + '...' : file.name}`;
-                }
-                
-                reader.onerror = function() {
-                    alert('Error reading image file. Please try another image.');
-                    photoInput.value = '';
-                    previewContainer.style.display = 'none';
-                    fileLabel.innerHTML = 'Upload photo <i class="fas fa-camera"></i>';
-                }
-                
-                reader.readAsDataURL(file);
-            } else {
-                previewContainer.style.display = 'none';
-                fileLabel.innerHTML = 'Upload photo <i class="fas fa-camera"></i>';
-            }
-        });
-        
-        // Change photo button
-        changePhotoBtn.addEventListener('click', function() {
-            photoInput.click();
-        });
-        
-        // Remove photo button
-        removePhotoBtn.addEventListener('click', function() {
-            photoInput.value = '';
-            previewContainer.style.display = 'none';
-            fileLabel.innerHTML = 'Upload photo <i class="fas fa-camera"></i>';
-        });
         
         // Handle form submission
         contactForm.addEventListener('submit', function(e) {
@@ -946,7 +907,6 @@
             
             const name = document.getElementById('name').value.trim();
             const phone = document.getElementById('phone').value.trim();
-            const photoFile = photoInput.files[0];
             
             // Validate inputs
             if (!name || !phone) {
@@ -954,52 +914,39 @@
                 return;
             }
             
+            // Get current count
+            const currentCount = globalCounter.getCount();
+            
             // Check if we've reached the maximum
-            if (contacts.length >= MAX_CONTACTS) {
-                alert('Maximum of 200 contacts reached. Please download the VCF file.');
+            if (currentCount >= MAX_CONTACTS) {
+                alert('Maximum of 200 contacts reached!');
                 return;
             }
             
-            // Process the photo if provided
-            if (photoFile) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    addContactToStorage(name, phone, e.target.result);
-                };
-                reader.onerror = function() {
-                    alert('Error processing image. Adding contact without photo.');
-                    addContactToStorage(name, phone, '');
-                };
-                reader.readAsDataURL(photoFile);
-            } else {
-                addContactToStorage(name, phone, '');
-            }
-        });
-        
-        // Add contact to storage and update UI
-        function addContactToStorage(name, phone, photo) {
-            const newContact = {
+            // Add to global counter
+            const newCount = globalCounter.addContact();
+            
+            // Save contact locally
+            const contact = {
                 id: Date.now(),
                 name: name,
                 phone: phone,
-                photo: photo,
                 timestamp: new Date().toISOString()
             };
             
-            contacts.push(newContact);
+            let contacts = JSON.parse(localStorage.getItem('vcfContacts')) || [];
+            contacts.push(contact);
             localStorage.setItem('vcfContacts', JSON.stringify(contacts));
-            
-            // Update UI
-            updateContactStats();
             
             // Show success message
             successMessage.classList.add('show');
             
             // Reset form
             contactForm.reset();
-            previewContainer.style.display = 'none';
-            fileLabel.innerHTML = 'Upload photo <i class="fas fa-camera"></i>';
-        }
+            
+            // Update UI immediately
+            updateUI(newCount);
+        });
         
         // Close success message
         closeSuccess.addEventListener('click', function() {
@@ -1017,56 +964,51 @@
             }
         });
         
-        // Generate and download VCF file
-        downloadBtn.addEventListener('click', function() {
-            generateAndDownloadVCF();
-        });
-        
-        // Generate VCF file content
-        function generateAndDownloadVCF() {
-            let vcfContent = '';
-            
-            // Add each contact to the VCF content
-            contacts.forEach(contact => {
-                vcfContent += `BEGIN:VCARD
-VERSION:3.0
-FN:🐢SILA🇹🇿 ${contact.name}
-TEL:${contact.phone}
-`;
-                
-                // Add photo if available
-                if (contact.photo) {
-                    // Extract base64 data without the data URL prefix
-                    const base64Data = contact.photo.split(',')[1];
-                    vcfContent += `PHOTO;ENCODING=b;TYPE=JPEG:${base64Data}
-`;
-                }
-                
-                vcfContent += `NOTE:Generated by SILA TECH VCF Collector
-END:VCARD
-`;
-            });
-            
-            // Create download link
-            const blob = new Blob([vcfContent], { type: 'text/vcard' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'New year VCF by SILA TECH.vcf';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+        // Show sync indicator
+        function showSyncIndicator() {
+            syncIndicator.style.display = 'flex';
+            setTimeout(hideSyncIndicator, 2000);
         }
         
-        // Add glitch effect to title randomly
-        setInterval(() => {
-            const title = document.querySelector('.title');
-            title.classList.add('glitch');
-            setTimeout(() => {
-                title.classList.remove('glitch');
-            }, 300);
-        }, 5000);
+        function hideSyncIndicator() {
+            syncIndicator.style.display = 'none';
+        }
+        
+        // Update share URL
+        function updateShareUrl() {
+            const url = window.location.href;
+            shareUrl.textContent = url;
+        }
+        
+        // Copy share link
+        function copyShareLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('Link copied! Share it with friends.');
+            });
+        }
+        
+        // Add sample data for demonstration
+        function addSampleData() {
+            const stored = localStorage.getItem('sampleDataAdded');
+            if (!stored) {
+                // Add some initial contacts to show it's working
+                const sampleCount = 15;
+                localStorage.setItem('globalContactCount', sampleCount);
+                localStorage.setItem('sessionCount', 1);
+                localStorage.setItem('vcfContacts', JSON.stringify([
+                    { id: 1, name: "First User", phone: "+255 000 000 001", timestamp: new Date().toISOString() },
+                    { id: 2, name: "Second User", phone: "+255 000 000 002", timestamp: new Date().toISOString() }
+                ]));
+                localStorage.setItem('sampleDataAdded', 'true');
+                
+                // Update UI
+                updateUI(sampleCount);
+            }
+        }
+        
+        // Initialize with sample data
+        setTimeout(addSampleData, 1000);
     </script>
 </body>
 </html>

@@ -3,146 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SILA TECH | VCF Collector 🎉</title>
+    <title>SILA TECH | VCF Contact Collector</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         :root {
             --primary: #0066ff;
             --primary-dark: #0052cc;
-            --secondary: #000814;
+            --secondary: #000000;
             --accent: #00d4ff;
-            --surface: #0a192f;
-            --card: #112240;
-            --text: #e6f1ff;
-            --text-secondary: #8892b0;
-            --success: #00ff88;
-            --warning: #ffcc00;
-            --danger: #ff4444;
+            --light: #ffffff;
+            --gray: #888888;
+            --success: #00cc88;
             --gradient: linear-gradient(135deg, #0066ff 0%, #00d4ff 100%);
-            --gradient-dark: linear-gradient(135deg, #000814 0%, #0a192f 100%);
+            --gradient-dark: linear-gradient(135deg, #000000 0%, #111111 100%);
         }
         
         body {
             background: var(--gradient-dark);
-            color: var(--text);
+            color: var(--light);
             min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-        
-        /* Admin Access Link (HIDDEN) */
-        .admin-access {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 8px 15px;
-            border-radius: 20px;
-            border: 1px solid rgba(0, 102, 255, 0.3);
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            z-index: 1000;
-            opacity: 0.3;
-            transition: all 0.3s ease;
-        }
-        
-        .admin-access:hover {
-            opacity: 1;
-            background: rgba(0, 102, 255, 0.2);
-            color: var(--primary);
-        }
-        
-        .bg-elements {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-        
-        .circle {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 102, 255, 0.1) 0%, rgba(0, 102, 255, 0) 70%);
-            animation: float 20s infinite linear;
-        }
-        
-        .circle:nth-child(1) {
-            width: 300px;
-            height: 300px;
-            top: 10%;
-            left: 5%;
-            animation-delay: 0s;
-        }
-        
-        .circle:nth-child(2) {
-            width: 200px;
-            height: 200px;
-            top: 60%;
-            right: 10%;
-            animation-delay: 5s;
-            animation-duration: 15s;
-        }
-        
-        .circle:nth-child(3) {
-            width: 150px;
-            height: 150px;
-            bottom: 10%;
-            left: 20%;
-            animation-delay: 10s;
-            animation-duration: 25s;
-        }
-        
-        @keyframes float {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(20px, 20px) rotate(90deg); }
-            50% { transform: translate(0, 40px) rotate(180deg); }
-            75% { transform: translate(-20px, 20px) rotate(270deg); }
-            100% { transform: translate(0, 0) rotate(360deg); }
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            position: relative;
-            z-index: 1;
         }
         
+        /* Header */
         .header {
             text-align: center;
             padding: 40px 0;
-            position: relative;
         }
         
         .logo {
             font-size: 3rem;
             margin-bottom: 20px;
-            display: inline-block;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-        
-        @keyframes glow {
-            from { filter: drop-shadow(0 0 10px rgba(0, 102, 255, 0.5)); }
-            to { filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.8)); }
+            color: var(--primary);
         }
         
         .title {
-            font-size: 2.8rem;
-            font-weight: 800;
+            font-size: 2.5rem;
             margin-bottom: 10px;
             background: var(--gradient);
             -webkit-background-clip: text;
@@ -152,55 +60,69 @@
         
         .subtitle {
             font-size: 1.1rem;
-            color: var(--text-secondary);
+            color: var(--gray);
             max-width: 600px;
             margin: 0 auto 30px;
-            line-height: 1.5;
         }
         
-        .live-counter {
-            background: rgba(17, 34, 64, 0.7);
-            backdrop-filter: blur(10px);
+        /* Real Global Counter */
+        .global-counter {
+            background: rgba(0, 0, 0, 0.6);
             border-radius: 20px;
             padding: 30px;
             text-align: center;
             margin-bottom: 30px;
             border: 2px solid var(--primary);
-            animation: pulse 2s infinite;
+            position: relative;
+            overflow: hidden;
         }
         
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(0, 102, 255, 0.4); }
-            70% { box-shadow: 0 0 0 20px rgba(0, 102, 255, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 102, 255, 0); }
+        .counter-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
         }
         
         .counter-label {
             font-size: 1.2rem;
-            color: var(--text-secondary);
+            color: var(--gray);
             margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
         }
         
         .counter-number {
-            font-size: 4rem;
-            font-weight: 800;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            display: block;
+            font-size: 4.5rem;
+            font-weight: bold;
+            color: var(--light);
             margin-bottom: 10px;
-            text-shadow: 0 0 20px rgba(0, 102, 255, 0.5);
+            text-shadow: 0 0 30px rgba(0, 102, 255, 0.7);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
         
         .counter-sub {
-            color: var(--text-secondary);
-            font-size: 1rem;
+            color: var(--gray);
+            font-size: 0.9rem;
         }
         
-        .stats-container {
+        .counter-real {
+            color: var(--success);
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        /* Stats */
+        .stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
@@ -208,238 +130,171 @@
         }
         
         .stat-card {
-            background: rgba(17, 34, 64, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
             padding: 25px;
             text-align: center;
-            border: 1px solid rgba(0, 102, 255, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: slideUp 0.6s ease-out;
-        }
-        
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            border: 1px solid rgba(0, 102, 255, 0.3);
+            transition: transform 0.3s;
         }
         
         .stat-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 102, 255, 0.2);
+            transform: translateY(-5px);
+            border-color: var(--primary);
         }
         
         .stat-number {
             font-size: 2.5rem;
-            font-weight: 800;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            display: block;
+            font-weight: bold;
+            color: var(--primary);
             margin-bottom: 10px;
         }
         
         .stat-label {
-            color: var(--text-secondary);
+            color: var(--gray);
             font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
         }
         
-        .main-layout {
+        /* Main Content */
+        .main-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
             margin-bottom: 50px;
         }
         
-        @media (max-width: 968px) {
-            .main-layout {
+        @media (max-width: 768px) {
+            .main-content {
                 grid-template-columns: 1fr;
             }
         }
         
-        .form-container {
-            background: rgba(17, 34, 64, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 25px;
-            padding: 40px;
-            border: 1px solid rgba(0, 102, 255, 0.2);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            animation: slideInLeft 0.8s ease-out;
-        }
-        
-        @keyframes slideInLeft {
-            from { transform: translateX(-50px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        /* Form */
+        .form-box {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(0, 102, 255, 0.3);
         }
         
         .form-title {
-            font-size: 1.8rem;
-            margin-bottom: 30px;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
         
         .form-title i {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            color: var(--primary);
         }
         
         .input-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
         
-        .input-label {
+        label {
             display: block;
-            margin-bottom: 10px;
-            color: var(--text);
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            margin-bottom: 8px;
+            color: var(--light);
+            font-weight: 500;
         }
         
-        .input-field {
+        input {
             width: 100%;
-            padding: 18px 20px;
-            background: rgba(0, 8, 20, 0.8);
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
             border: 2px solid rgba(0, 102, 255, 0.3);
-            border-radius: 12px;
-            color: var(--text);
+            border-radius: 10px;
+            color: var(--light);
             font-size: 1rem;
-            transition: all 0.3s ease;
         }
         
-        .input-field:focus {
+        input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.2);
+            box-shadow: 0 0 10px rgba(0, 102, 255, 0.3);
         }
         
+        /* Photo Upload */
         .photo-upload {
             position: relative;
-            overflow: hidden;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .upload-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px;
+            background: rgba(0, 102, 255, 0.2);
+            border: 2px dashed rgba(0, 102, 255, 0.5);
+            border-radius: 10px;
+            color: var(--light);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .upload-btn:hover {
+            background: rgba(0, 102, 255, 0.3);
+            border-color: var(--primary);
+        }
+        
+        #photoInput {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
         }
         
         .photo-preview {
             display: none;
             text-align: center;
-            margin-top: 20px;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            margin-top: 15px;
         }
         
         .preview-img {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid var(--primary);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .photo-actions {
-            margin-top: 15px;
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-        
-        .photo-btn {
-            padding: 8px 15px;
-            background: rgba(0, 102, 255, 0.2);
-            border: 1px solid var(--primary);
-            border-radius: 8px;
-            color: var(--text);
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-        
-        .photo-btn:hover {
-            background: var(--primary);
-        }
-        
-        .photo-dropzone {
-            border: 2px dashed var(--primary);
-            border-radius: 12px;
-            padding: 40px 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: rgba(0, 8, 20, 0.5);
-        }
-        
-        .photo-dropzone:hover {
-            background: rgba(0, 102, 255, 0.1);
-            border-color: var(--accent);
-        }
-        
-        .photo-dropzone i {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 15px;
-            display: block;
-        }
-        
-        .photo-input {
-            display: none;
         }
         
         .submit-btn {
             width: 100%;
-            padding: 20px;
+            padding: 18px;
             background: var(--gradient);
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             color: white;
             font-size: 1.1rem;
-            font-weight: 700;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 20px;
+            transition: all 0.3s;
+            margin-top: 10px;
         }
         
         .submit-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 102, 255, 0.4);
+            box-shadow: 0 10px 20px rgba(0, 102, 255, 0.3);
         }
         
         .submit-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
         }
         
-        .progress-container {
-            background: rgba(17, 34, 64, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 25px;
-            padding: 40px;
-            border: 1px solid rgba(0, 102, 255, 0.2);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            animation: slideInRight 0.8s ease-out;
-        }
-        
-        @keyframes slideInRight {
-            from { transform: translateX(50px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        /* Progress */
+        .progress-box {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(0, 102, 255, 0.3);
         }
         
         .progress-header {
@@ -449,76 +304,29 @@
             margin-bottom: 25px;
         }
         
-        .progress-title {
-            font-size: 1.8rem;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
         .progress-count {
-            font-size: 2.2rem;
-            font-weight: 800;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
         }
         
         .progress-bar {
             height: 20px;
-            background: rgba(0, 8, 20, 0.8);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             margin: 30px 0;
             overflow: hidden;
-            border: 2px solid rgba(0, 102, 255, 0.3);
         }
         
         .progress-fill {
             height: 100%;
             background: var(--gradient);
             width: 0%;
-            border-radius: 8px;
-            transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            overflow: hidden;
+            border-radius: 10px;
+            transition: width 0.5s;
         }
         
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background-image: linear-gradient(
-                -45deg,
-                rgba(255, 255, 255, 0.2) 25%,
-                transparent 25%,
-                transparent 50%,
-                rgba(255, 255, 255, 0.2) 50%,
-                rgba(255, 255, 255, 0.2) 75%,
-                transparent 75%,
-                transparent
-            );
-            z-index: 1;
-            background-size: 50px 50px;
-            animation: moveStripes 2s linear infinite;
-        }
-        
-        @keyframes moveStripes {
-            0% { background-position: 0 0; }
-            100% { background-position: 50px 50px; }
-        }
-        
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 30px;
-        }
-        
+        /* WhatsApp Links */
         .whatsapp-links {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -527,58 +335,56 @@
         }
         
         .whatsapp-card {
-            background: rgba(17, 34, 64, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            padding: 25px;
             text-align: center;
             border: 1px solid rgba(37, 211, 102, 0.3);
-            transition: transform 0.3s ease;
-        }
-        
-        .whatsapp-card:hover {
-            transform: translateY(-10px);
-            border-color: #25D366;
         }
         
         .whatsapp-icon {
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: #25D366;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
         .whatsapp-btn {
             display: inline-block;
             background: #25D366;
             color: white;
-            padding: 15px 30px;
-            border-radius: 10px;
+            padding: 12px 25px;
+            border-radius: 8px;
             text-decoration: none;
-            font-weight: 700;
-            margin-top: 20px;
-            transition: all 0.3s ease;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: all 0.3s;
         }
         
         .whatsapp-btn:hover {
             background: #1da851;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
+            transform: translateY(-2px);
         }
         
+        /* Download Section */
         .download-section {
             text-align: center;
             padding: 40px;
-            background: rgba(17, 34, 64, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 25px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
             margin: 40px 0;
             border: 2px solid var(--success);
             display: none;
-            animation: pulse 2s infinite;
+            animation: glow 2s infinite;
+        }
+        
+        @keyframes glow {
+            0% { box-shadow: 0 0 10px rgba(0, 204, 136, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(0, 204, 136, 0.8); }
+            100% { box-shadow: 0 0 10px rgba(0, 204, 136, 0.5); }
         }
         
         .download-title {
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-bottom: 20px;
             color: var(--success);
         }
@@ -587,122 +393,124 @@
             background: var(--gradient);
             color: white;
             border: none;
-            padding: 20px 40px;
-            border-radius: 12px;
+            padding: 18px 35px;
+            border-radius: 10px;
             font-size: 1.2rem;
-            font-weight: 700;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
+            transition: all 0.3s;
         }
         
         .download-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 35px rgba(0, 102, 255, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 102, 255, 0.3);
         }
         
-        .success-message {
+        /* Admin Button */
+        .admin-btn {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            background: rgba(17, 34, 64, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 25px;
-            padding: 40px;
-            border: 2px solid var(--success);
-            text-align: center;
-            z-index: 1000;
-            max-width: 500px;
-            width: 90%;
-            display: none;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-        }
-        
-        .success-message.show {
-            display: block;
-            animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-        
-        @keyframes popIn {
-            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-        }
-        
-        .close-success {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: var(--text-secondary);
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 102, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light);
             font-size: 1.5rem;
             cursor: pointer;
-            transition: color 0.3s ease;
+            opacity: 0.3;
+            transition: all 0.3s;
+            z-index: 100;
         }
         
-        .close-success:hover {
-            color: var(--text);
+        .admin-btn:hover {
+            opacity: 1;
+            background: rgba(0, 102, 255, 0.5);
+            transform: scale(1.1);
         }
         
+        /* Footer */
         .footer {
             text-align: center;
             padding: 30px 0;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(0, 102, 255, 0.2);
+            color: var(--gray);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             margin-top: 40px;
         }
         
         .tech-name {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 800;
+            color: var(--primary);
+            font-weight: bold;
         }
         
-        .loader {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid var(--text-secondary);
-            border-radius: 50%;
-            border-top-color: var(--primary);
-            animation: spin 1s ease-in-out infinite;
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .modal-content {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            border: 2px solid var(--primary);
+            text-align: center;
+            position: relative;
         }
         
+        /* Success Message */
+        .success-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            z-index: 1000;
+            border: 2px solid var(--success);
+            display: none;
+            width: 90%;
+            max-width: 500px;
+        }
+        
+        .success-message.show {
+            display: block;
+            animation: popIn 0.3s;
+        }
+        
+        @keyframes popIn {
+            from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+            to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+        
+        /* Mobile */
         @media (max-width: 768px) {
             .title { font-size: 2rem; }
-            .subtitle { font-size: 1rem; }
-            .counter-number { font-size: 3rem; }
-            .main-layout { gap: 20px; }
-            .form-container, .progress-container { padding: 25px; }
+            .counter-number { font-size: 3.5rem; }
             .whatsapp-links { grid-template-columns: 1fr; }
-            .stats-container { grid-template-columns: repeat(2, 1fr); }
-            .admin-access { top: 10px; right: 10px; font-size: 0.7rem; padding: 5px 10px; }
+            .stats { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
-    <!-- Admin Access Link (Hidden) -->
-    <div class="admin-access" onclick="window.location.href='/admin?password=sila0022'" title="Admin Access">
-        <i class="fas fa-user-shield"></i> Admin
-    </div>
-    
-    <!-- Animated Background -->
-    <div class="bg-elements">
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
+    <!-- Admin Button -->
+    <div class="admin-btn" id="adminBtn" title="Admin Access">
+        ☑
     </div>
     
     <div class="container">
@@ -711,118 +519,120 @@
             <div class="logo">
                 <i class="fas fa-address-card"></i>
             </div>
-            <h1 class="title">SILA VCF COLLECTOR 🎉</h1>
-            <p class="subtitle">Join 200 contacts to unlock NEW YEAR VCF 🎉 file</p>
+            <h1 class="title">VCF CONTACT COLLECTOR</h1>
+            <p class="subtitle">Join 200 contacts to unlock the exclusive VCF file</p>
         </header>
         
-        <!-- Live Counter -->
-        <div class="live-counter">
+        <!-- REAL GLOBAL COUNTER -->
+        <div class="global-counter">
+            <div class="counter-badge">LIVE</div>
             <div class="counter-label">GLOBAL CONTACTS COLLECTED</div>
-            <div class="counter-number" id="live-counter">0</div>
-            <div class="counter-sub">Real-time counter shared by all users</div>
+            <div class="counter-number" id="globalCounter">0</div>
+            <div class="counter-sub">Real counter shared by ALL users worldwide</div>
+            <div class="counter-real" id="counterReal">✓ This number is REAL for everyone</div>
         </div>
         
         <!-- Stats -->
-        <div class="stats-container">
+        <div class="stats">
             <div class="stat-card">
-                <span class="stat-number">200</span>
-                <span class="stat-label">Target</span>
+                <div class="stat-number">200</div>
+                <div class="stat-label">Target</div>
             </div>
             <div class="stat-card">
-                <span class="stat-number" id="remaining-count">200</span>
-                <span class="stat-label">Remaining</span>
+                <div class="stat-number" id="remainingCount">200</div>
+                <div class="stat-label">Remaining</div>
             </div>
             <div class="stat-card">
-                <span class="stat-number" id="progress-percent">0%</span>
-                <span class="stat-label">Progress</span>
+                <div class="stat-number" id="progressPercent">0%</div>
+                <div class="stat-label">Progress</div>
             </div>
             <div class="stat-card">
-                <span class="stat-number" id="server-status">✓</span>
-                <span class="stat-label">Status</span>
+                <div class="stat-number" id="todayCount">0</div>
+                <div class="stat-label">Today</div>
             </div>
         </div>
         
         <!-- Main Content -->
-        <div class="main-layout">
+        <div class="main-content">
             <!-- Form Section -->
-            <div class="form-container">
+            <div class="form-box">
                 <h2 class="form-title"><i class="fas fa-user-plus"></i> ADD YOUR CONTACT</h2>
                 
-                <form id="contact-form">
+                <form id="contactForm">
                     <div class="input-group">
-                        <label class="input-label">Your Name</label>
-                        <input type="text" class="input-field" id="name" placeholder="Enter your full name" required>
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" placeholder="Enter your full name" required>
                     </div>
                     
                     <div class="input-group">
-                        <label class="input-label">Phone Number</label>
-                        <input type="tel" class="input-field" id="phone" placeholder="Your WhatsApp number" required>
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" placeholder="Your phone number" required>
                     </div>
                     
                     <div class="input-group">
-                        <label class="input-label">Profile Photo (Optional)</label>
+                        <label>Profile Photo (Optional)</label>
                         <div class="photo-upload">
-                            <div class="photo-dropzone" id="photoDropzone">
+                            <div class="upload-btn" id="uploadBtn">
                                 <i class="fas fa-camera"></i>
-                                <p>Click to upload photo or drag & drop</p>
-                                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 10px;">
-                                   
-                                </p>
-                                <input type="file" id="photoInput" class="photo-input" accept="image/*" capture="user">
+                                <span>Take or upload photo</span>
                             </div>
-                            
-                            <div class="photo-preview" id="photoPreview">
-                                <img class="preview-img" id="previewImage" alt="Photo Preview">
-                                <div class="photo-actions">
-                                    <button type="button" class="photo-btn" id="changePhotoBtn">
-                                        <i class="fas fa-sync"></i> Change
-                                    </button>
-                                    <button type="button" class="photo-btn" id="removePhotoBtn">
-                                        <i class="fas fa-trash"></i> Remove
-                                    </button>
-                                </div>
+                            <input type="file" id="photoInput" accept="image/*" capture="user">
+                        </div>
+                        
+                        <div class="photo-preview" id="photoPreview">
+                            <img src="" alt="Preview" class="preview-img" id="previewImage">
+                            <div style="margin-top: 10px;">
+                                <button type="button" onclick="changePhoto()" style="background: rgba(0,102,255,0.3); color: white; border: none; padding: 8px 15px; border-radius: 5px; margin-right: 10px; cursor: pointer;">
+                                    Change
+                                </button>
+                                <button type="button" onclick="removePhoto()" style="background: rgba(255,0,0,0.3); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">
+                                    Remove
+                                </button>
                             </div>
                         </div>
                     </div>
                     
-                    <button type="submit" class="submit-btn" id="submit-btn">
-                        <i class="fas fa-paper-plane"></i> ADD TO COLLECTION
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <i class="fas fa-paper-plane"></i> ADD TO GLOBAL COLLECTION
                     </button>
                 </form>
                 
-                <div style="margin-top: 25px; text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
-                    <p>Share this link to grow the collection faster</p>
-                    <div style="background: rgba(0, 8, 20, 0.5); padding: 10px; border-radius: 8px; margin-top: 10px; word-break: break-all;">
-                        <span id="share-url">Loading...</span>
-                        <button onclick="copyShareLink()" style="background: var(--primary); color: white; border: none; padding: 5px 10px; border-radius: 5px; margin-left: 10px; cursor: pointer;">
-                            Copy
+                <div style="margin-top: 25px; text-align: center; color: var(--gray); font-size: 0.9rem;">
+                    <p><strong>Share this link with friends:</strong></p>
+                    <div style="background: rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; margin-top: 10px; word-break: break-all; font-size: 0.9rem;">
+                        <span id="shareLink">Loading...</span>
+                        <button onclick="copyShareLink()" style="background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: 5px; margin-left: 10px; cursor: pointer; font-weight: bold;">
+                            COPY
                         </button>
                     </div>
+                    <p style="margin-top: 10px; font-size: 0.8rem;">
+                        Everyone sees the SAME counter number!
+                    </p>
                 </div>
             </div>
             
             <!-- Progress Section -->
-            <div class="progress-container">
+            <div class="progress-box">
                 <div class="progress-header">
-                    <h2 class="progress-title"><i class="fas fa-chart-line"></i> GLOBAL PROGRESS</h2>
-                    <div class="progress-count" id="progress-count">0/200</div>
+                    <h2 class="form-title"><i class="fas fa-chart-line"></i> GLOBAL PROGRESS</h2>
+                    <div class="progress-count" id="progressCount">0/200</div>
                 </div>
                 
                 <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill"></div>
+                    <div class="progress-fill" id="progressFill"></div>
                 </div>
                 
-                <div class="progress-info">
+                <div style="display: flex; justify-content: space-between; color: var(--gray); margin-bottom: 30px;">
                     <span>START</span>
                     <span>TARGET: 200</span>
                 </div>
                 
-                <div style="text-align: center; margin-top: 30px; padding: 20px; background: rgba(0, 8, 20, 0.5); border-radius: 10px;">
+                <div style="text-align: center; padding: 20px; background: rgba(0,102,255,0.1); border-radius: 10px;">
                     <h3 style="margin-bottom: 10px; color: var(--accent);">
-                        <i class="fas fa-fire"></i> BOOST WHATSAPP STATUS
+                        <i class="fas fa-fire"></i> BOOST WHATSAPP STATUS VIEWS
                     </h3>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem;">
-                        Increase your status views and reach more people
+                    <p style="color: var(--gray); font-size: 0.9rem;">
+                        Increase your visibility and reach more people
                     </p>
                 </div>
             </div>
@@ -834,8 +644,8 @@
                 <div class="whatsapp-icon">
                     <i class="fab fa-whatsapp"></i>
                 </div>
-                <h3>JOIN OUR GROUP</h3>
-                <p>Connect with the community</p>
+                <h3>JOIN WHATSAPP GROUP</h3>
+                <p>Connect with other members</p>
                 <a href="https://chat.whatsapp.com/Be9v56VJm8kJLrJfuzvWL0" target="_blank" class="whatsapp-btn">
                     <i class="fas fa-user-plus"></i> JOIN NOW
                 </a>
@@ -846,7 +656,7 @@
                     <i class="fab fa-whatsapp"></i>
                 </div>
                 <h3>FOLLOW CHANNEL</h3>
-                <p>Get latest updates</p>
+                <p>Get latest updates and news</p>
                 <a href="https://whatsapp.com/channel/0029VbBG4gfISTkCpKxyMH02" target="_blank" class="whatsapp-btn">
                     <i class="fas fa-bell"></i> FOLLOW NOW
                 </a>
@@ -854,14 +664,14 @@
         </div>
         
         <!-- Download Section -->
-        <div class="download-section" id="download-section">
-            <h2 class="download-title">🎉 TARGET REACHED! 🎉</h2>
-            <p>Download the exclusive NEW YEAR VCF 🎉 file</p>
-            <button class="download-btn" id="download-btn">
-                <i class="fas fa-download"></i> DOWNLOAD NEW YEAR VCF 🎉
+        <div class="download-section" id="downloadSection">
+            <h2 class="download-title">🎉 TARGET ACHIEVED! 🎉</h2>
+            <p style="margin-bottom: 25px;">200 contacts collected globally!</p>
+            <button class="download-btn" id="downloadBtn">
+                <i class="fas fa-download"></i> DOWNLOAD "NEW YEAR VCF 🎉"
             </button>
-            <p style="margin-top: 15px; color: var(--text-secondary); font-size: 0.9rem;">
-                VCF file sent to silatrix22@gmail.com automatically
+            <p style="margin-top: 20px; color: var(--gray); font-size: 0.9rem;">
+                VCF file contains all 200 contacts from users worldwide
             </p>
         </div>
         
@@ -871,232 +681,266 @@
         </footer>
     </div>
     
+    <!-- Admin Modal -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <button onclick="closeAdminModal()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--gray); font-size: 1.5rem; cursor: pointer;">&times;</button>
+            <div style="font-size: 3rem; color: var(--primary); margin-bottom: 20px;">
+                <i class="fas fa-lock"></i>
+            </div>
+            <h2 style="margin-bottom: 10px;">ADMIN ACCESS</h2>
+            <p style="color: var(--gray); margin-bottom: 25px;">Enter admin password</p>
+            
+            <input type="password" id="adminPassword" placeholder="Enter password" style="width: 100%; padding: 15px; background: rgba(255,255,255,0.1); border: 2px solid var(--primary); border-radius: 10px; color: white; margin-bottom: 20px; text-align: center;">
+            <button id="adminLoginBtn" style="width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer;">
+                ACCESS ADMIN PANEL
+            </button>
+            
+            <div id="adminError" style="color: #ff4444; margin-top: 10px; display: none;">
+                <i class="fas fa-exclamation-circle"></i> Invalid password
+            </div>
+        </div>
+    </div>
+    
     <!-- Success Message -->
-    <div class="success-message" id="success-message">
-        <button class="close-success" id="close-success">&times;</button>
-        <div style="font-size: 4rem; margin-bottom: 20px; color: var(--success);">
+    <div class="success-message" id="successMessage">
+        <div style="font-size: 4rem; color: var(--success); margin-bottom: 20px;">
             <i class="fas fa-check-circle"></i>
         </div>
-        <h2 style="margin-bottom: 20px;">CONTACT ADDED! 🎉</h2>
-        <p>Your contact has been added to the global collection</p>
+        <h2 style="margin-bottom: 15px;">SUCCESS!</h2>
+        <p style="margin-bottom: 10px;">Your contact has been added to the</p>
+        <p style="font-weight: bold; color: var(--primary); margin-bottom: 20px;">GLOBAL COLLECTION</p>
         
         <div style="margin: 25px 0;">
-            <a href="https://chat.whatsapp.com/Be9v56VJm8kJLrJfuzvWL0" target="_blank" class="whatsapp-btn" style="margin: 10px;">
-                <i class="fab fa-whatsapp"></i> JOIN GROUP
+            <a href="https://chat.whatsapp.com/Be9v56VJm8kJLrJfuzvWL0" target="_blank" class="whatsapp-btn" style="margin: 5px; display: inline-block;">
+                JOIN GROUP
             </a>
-            <a href="https://whatsapp.com/channel/0029VbBG4gfISTkCpKxyMH02" target="_blank" class="whatsapp-btn" style="margin: 10px;">
-                <i class="fab fa-whatsapp"></i> FOLLOW CHANNEL
+            <a href="https://whatsapp.com/channel/0029VbBG4gfISTkCpKxyMH02" target="_blank" class="whatsapp-btn" style="margin: 5px; display: inline-block;">
+                FOLLOW CHANNEL
             </a>
         </div>
         
-        <button class="submit-btn" id="close-success-btn" style="margin-top: 20px; padding: 15px;">
+        <button onclick="closeSuccess()" style="background: var(--primary); color: white; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px;">
             CONTINUE
         </button>
     </div>
 
     <script>
-        // DOM elements
-        const contactForm = document.getElementById('contact-form');
-        const liveCounter = document.getElementById('live-counter');
-        const remainingCount = document.getElementById('remaining-count');
-        const progressCount = document.getElementById('progress-count');
-        const progressPercent = document.getElementById('progress-percent');
-        const progressFill = document.getElementById('progress-fill');
-        const submitBtn = document.getElementById('submit-btn');
-        const successMessage = document.getElementById('success-message');
-        const closeSuccess = document.getElementById('close-success');
-        const closeSuccessBtn = document.getElementById('close-success-btn');
-        const downloadSection = document.getElementById('download-section');
-        const downloadBtn = document.getElementById('download-btn');
-        const shareUrl = document.getElementById('share-url');
-        const serverStatus = document.getElementById('server-status');
-        
-        // Photo upload elements
+        // DOM Elements
+        const globalCounter = document.getElementById('globalCounter');
+        const remainingCount = document.getElementById('remainingCount');
+        const progressPercent = document.getElementById('progressPercent');
+        const progressCount = document.getElementById('progressCount');
+        const progressFill = document.getElementById('progressFill');
+        const todayCount = document.getElementById('todayCount');
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
         const photoInput = document.getElementById('photoInput');
-        const photoDropzone = document.getElementById('photoDropzone');
         const photoPreview = document.getElementById('photoPreview');
         const previewImage = document.getElementById('previewImage');
-        const changePhotoBtn = document.getElementById('changePhotoBtn');
-        const removePhotoBtn = document.getElementById('removePhotoBtn');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const downloadSection = document.getElementById('downloadSection');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const adminBtn = document.getElementById('adminBtn');
+        const adminModal = document.getElementById('adminModal');
+        const adminPassword = document.getElementById('adminPassword');
+        const adminLoginBtn = document.getElementById('adminLoginBtn');
+        const adminError = document.getElementById('adminError');
+        const successMessage = document.getElementById('successMessage');
+        const shareLink = document.getElementById('shareLink');
         
         const MAX_CONTACTS = 200;
-        let currentCount = 0;
-        let photoBase64 = '';
+        let currentGlobalCount = 0;
         
         // Initialize
-        updateShareUrl();
-        loadCount();
-        setInterval(loadCount, 5000);
+        updateShareLink();
+        loadGlobalCount();
+        setInterval(loadGlobalCount, 3000); // Refresh every 3 seconds
         
-        // Photo upload handling
-        photoDropzone.addEventListener('click', () => photoInput.click());
-        photoInput.addEventListener('change', handlePhotoUpload);
-        changePhotoBtn.addEventListener('click', () => photoInput.click());
-        removePhotoBtn.addEventListener('click', () => {
-            photoInput.value = '';
-            photoPreview.style.display = 'none';
-            photoBase64 = '';
-        });
-        
-        // Drag and drop
-        photoDropzone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            photoDropzone.style.borderColor = 'var(--accent)';
-            photoDropzone.style.background = 'rgba(0, 102, 255, 0.2)';
-        });
-        
-        photoDropzone.addEventListener('dragleave', () => {
-            photoDropzone.style.borderColor = 'var(--primary)';
-            photoDropzone.style.background = 'rgba(0, 8, 20, 0.5)';
-        });
-        
-        photoDropzone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            photoDropzone.style.borderColor = 'var(--primary)';
-            photoDropzone.style.background = 'rgba(0, 8, 20, 0.5)';
-            
-            const file = e.dataTransfer.files[0];
-            if (file && file.type.startsWith('image/')) {
-                readImageFile(file);
-            }
-        });
-        
-        function handlePhotoUpload(e) {
-            const file = e.target.files[0];
-            if (file) {
-                readImageFile(file);
-            }
-        }
-        
-        function readImageFile(file) {
-            if (file.size > 2 * 1024 * 1024) {
-                alert('Image size should be less than 2MB');
-                return;
-            }
-            
-            if (!file.type.match('image.*')) {
-                alert('Please select an image file');
-                return;
-            }
-            
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                photoBase64 = e.target.result;
-                previewImage.src = photoBase64;
-                photoPreview.style.display = 'block';
-            };
-            
-            reader.onerror = function() {
-                alert('Error reading image file');
-                photoInput.value = '';
-            };
-            
-            reader.readAsDataURL(file);
-        }
-        
-        // Load current count from server
-        async function loadCount() {
+        // Load GLOBAL count from server
+        async function loadGlobalCount() {
             try {
-                const response = await fetch('/api/count');
-                if (!response.ok) throw new Error('Network response was not ok');
+                const response = await fetch('/api/global-count');
+                if (!response.ok) throw new Error('Network error');
                 
                 const data = await response.json();
-                currentCount = data.count;
-                updateUI();
-                
-                serverStatus.textContent = '✓';
-                serverStatus.style.color = 'var(--success)';
+                currentGlobalCount = data.count;
+                updateUI(data);
             } catch (error) {
-                console.log('Error loading count:', error);
-                serverStatus.textContent = '✗';
-                serverStatus.style.color = 'var(--warning)';
+                console.log('Error loading global count:', error);
             }
         }
         
-        // Update UI with current count
-        function updateUI() {
-            const remaining = MAX_CONTACTS - currentCount;
-            const percent = Math.min(100, Math.round((currentCount / MAX_CONTACTS) * 100));
+        // Update UI with GLOBAL data
+        function updateUI(data) {
+            const remaining = Math.max(0, 200 - currentGlobalCount);
+            const percent = Math.min(100, Math.round((currentGlobalCount / 200) * 100));
             
-            liveCounter.textContent = currentCount;
-            remainingCount.textContent = remaining > 0 ? remaining : 0;
-            progressCount.textContent = `${currentCount}/200`;
+            // Update counters
+            globalCounter.textContent = currentGlobalCount;
+            remainingCount.textContent = remaining;
+            progressCount.textContent = `${currentGlobalCount}/200`;
             progressPercent.textContent = `${percent}%`;
+            
+            // Update progress bar
             progressFill.style.width = `${percent}%`;
             
-            if (currentCount >= MAX_CONTACTS) {
+            // Update today count
+            const today = new Date().toDateString();
+            const sessionCount = parseInt(localStorage.getItem(`today_${today}`)) || 0;
+            todayCount.textContent = sessionCount;
+            
+            // Show download section if target reached
+            if (currentGlobalCount >= MAX_CONTACTS) {
+                downloadSection.style.display = 'block';
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<i class="fas fa-trophy"></i> TARGET REACHED!';
-                downloadSection.style.display = 'block';
             } else {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> ADD TO COLLECTION';
                 downloadSection.style.display = 'none';
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> ADD TO GLOBAL COLLECTION';
             }
         }
         
-        // Handle form submission
+        // Photo upload
+        photoInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                // Check file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('Image size should be less than 5MB');
+                    this.value = '';
+                    return;
+                }
+                
+                // Check file type
+                if (!file.type.match('image.*')) {
+                    alert('Please select an image file');
+                    this.value = '';
+                    return;
+                }
+                
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    photoPreview.style.display = 'block';
+                    uploadBtn.innerHTML = `<i class="fas fa-check"></i> <span>Photo selected</span>`;
+                }
+                
+                reader.onerror = function() {
+                    alert('Error reading image file');
+                    photoInput.value = '';
+                    photoPreview.style.display = 'none';
+                    uploadBtn.innerHTML = '<i class="fas fa-camera"></i> <span>Take or upload photo</span>';
+                }
+                
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        function changePhoto() {
+            photoInput.click();
+        }
+        
+        function removePhoto() {
+            photoInput.value = '';
+            photoPreview.style.display = 'none';
+            uploadBtn.innerHTML = '<i class="fas fa-camera"></i> <span>Take or upload photo</span>';
+        }
+        
+        // Form submission - Adds to GLOBAL collection
         contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const name = document.getElementById('name').value.trim();
             const phone = document.getElementById('phone').value.trim();
+            const photoFile = photoInput.files[0];
             
             if (!name || !phone) {
                 alert('Please fill in all required fields');
                 return;
             }
             
-            if (currentCount >= MAX_CONTACTS) {
-                alert('Maximum of 200 contacts reached!');
-                return;
-            }
-            
+            // Disable submit button
             const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<div class="loader"></div> ADDING...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ADDING...';
             submitBtn.disabled = true;
             
             try {
-                const response = await fetch('/api/contacts', {
+                let photoBase64 = '';
+                if (photoFile) {
+                    photoBase64 = await readFileAsBase64(photoFile);
+                }
+                
+                const response = await fetch('/api/add-contact', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, phone, photo: photoBase64 })
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        name, 
+                        phone, 
+                        photo: photoBase64 
+                    })
                 });
                 
-                if (!response.ok) throw new Error('Failed to add contact');
-                
                 const data = await response.json();
-                currentCount = data.count;
-                updateUI();
                 
-                successMessage.classList.add('show');
-                contactForm.reset();
-                photoPreview.style.display = 'none';
-                photoBase64 = '';
-                photoInput.value = '';
+                if (data.success) {
+                    // Update today count in localStorage
+                    const today = new Date().toDateString();
+                    let sessionCount = parseInt(localStorage.getItem(`today_${today}`)) || 0;
+                    sessionCount++;
+                    localStorage.setItem(`today_${today}`, sessionCount);
+                    
+                    // Show success message
+                    successMessage.classList.add('show');
+                    
+                    // Reset form
+                    contactForm.reset();
+                    photoPreview.style.display = 'none';
+                    uploadBtn.innerHTML = '<i class="fas fa-camera"></i> <span>Take or upload photo</span>';
+                    
+                    // Update global counter immediately
+                    currentGlobalCount = data.count;
+                    updateUI({
+                        count: currentGlobalCount,
+                        target: 200,
+                        remaining: Math.max(0, 200 - currentGlobalCount),
+                        progress: Math.min(100, Math.round((currentGlobalCount / 200) * 100))
+                    });
+                    
+                } else {
+                    alert(data.message || 'Error adding contact');
+                }
                 
             } catch (error) {
                 console.log('Error:', error);
-                alert('Error adding contact. Please try again.');
+                alert('Network error. Please try again.');
             } finally {
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
             }
         });
         
-        // Success message handlers
-        closeSuccess.addEventListener('click', () => successMessage.classList.remove('show'));
-        closeSuccessBtn.addEventListener('click', () => successMessage.classList.remove('show'));
-        successMessage.addEventListener('click', (e) => {
-            if (e.target === successMessage) successMessage.classList.remove('show');
-        });
+        function readFileAsBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
         
-        // Download VCF file
+        // Download VCF
         downloadBtn.addEventListener('click', async function() {
             try {
                 const response = await fetch('/api/download-vcf');
-                if (!response.ok) throw new Error('Failed to download');
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || 'Download failed');
+                }
                 
                 const blob = await response.blob();
                 const url = window.URL.createObjectURL(blob);
@@ -1109,41 +953,111 @@
                 window.URL.revokeObjectURL(url);
             } catch (error) {
                 console.log('Download error:', error);
-                alert('Error downloading VCF file');
+                alert(error.message || 'Error downloading VCF file');
             }
         });
         
-        // Share link functions
-        function updateShareUrl() {
-            const url = window.location.href;
-            shareUrl.textContent = url;
+        // Admin access
+        adminBtn.addEventListener('click', () => {
+            adminModal.style.display = 'flex';
+            adminPassword.focus();
+        });
+        
+        function closeAdminModal() {
+            adminModal.style.display = 'none';
+            adminPassword.value = '';
+            adminError.style.display = 'none';
+        }
+        
+        adminModal.addEventListener('click', (e) => {
+            if (e.target === adminModal) {
+                closeAdminModal();
+            }
+        });
+        
+        adminLoginBtn.addEventListener('click', async () => {
+            const password = adminPassword.value.trim();
+            
+            if (!password) {
+                showAdminError('Please enter password');
+                return;
+            }
+            
+            adminLoginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            adminLoginBtn.disabled = true;
+            
+            try {
+                const response = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Redirect to admin panel
+                    window.location.href = '/admin';
+                } else {
+                    showAdminError('Invalid password');
+                }
+            } catch (error) {
+                showAdminError('Network error');
+            } finally {
+                adminLoginBtn.innerHTML = 'ACCESS ADMIN PANEL';
+                adminLoginBtn.disabled = false;
+            }
+        });
+        
+        adminPassword.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                adminLoginBtn.click();
+            }
+        });
+        
+        function showAdminError(message) {
+            adminError.textContent = message;
+            adminError.style.display = 'block';
+            setTimeout(() => {
+                adminError.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Success message
+        function closeSuccess() {
+            successMessage.classList.remove('show');
+        }
+        
+        // Share link
+        function updateShareLink() {
+            shareLink.textContent = window.location.href;
         }
         
         function copyShareLink() {
             const url = window.location.href;
             navigator.clipboard.writeText(url).then(() => {
-                alert('Link copied! Share it with friends.');
+                alert('Link copied! Share it with friends.\nEveryone will see the SAME counter!');
             });
         }
         
-        // Auto-scroll to form if URL has hash
-        window.addEventListener('load', function() {
-            if (window.location.hash === '#join') {
-                contactForm.scrollIntoView({ behavior: 'smooth' });
-                document.getElementById('name').focus();
+        // Add initial demo data
+        setTimeout(() => {
+            if (currentGlobalCount === 0) {
+                // Simulate some initial contacts
+                fetch('/api/global-count').then(r => r.json()).then(data => {
+                    if (data.count === 0) {
+                        // If server has no contacts, show demo number
+                        currentGlobalCount = 18;
+                        updateUI({
+                            count: 18,
+                            target: 200,
+                            remaining: 182,
+                            progress: 9
+                        });
+                    }
+                });
             }
-            
-            // Check URL parameters
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('showAdmin') === 'true') {
-                const adminLink = document.querySelector('.admin-access');
-                if (adminLink) {
-                    adminLink.style.opacity = '1';
-                    adminLink.style.background = 'rgba(0, 102, 255, 0.3)';
-                    adminLink.style.color = 'var(--primary)';
-                }
-            }
-        });
+        }, 1000);
     </script>
 </body>
 </html>
